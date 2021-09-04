@@ -10,7 +10,12 @@ int main()
     cin >> numerojen_maara;
 
     for (int i = 1; i <= numerojen_maara; ++i) {
-        cout << i << endl;
+        if (i % 3 == 0) {
+            cout << "zip" << endl;
+        } else {
+            cout << i << endl;
+        }
+
     }
 
 }

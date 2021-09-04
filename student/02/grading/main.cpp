@@ -77,8 +77,14 @@ int main()
 
     //calculate average of n, g, and e
 
-    double score = ((double)n_g_points_best + (double)p_points + (double)e) / 3.0;
-    //cout << "unrounded score: " << score << endl << endl;
+    double score = 0.0;
+
+    if (e == 0) {
+        score = ((double)n_g_points_best + (double)p_points) / 2.0;
+        score -= 2.0;
+    } else {
+        score = ((double)n_g_points_best + (double)p_points + (double)e) / 3.0;
+    }
     double rounded_score = round(score);
     int score_as_int = (int)rounded_score;
 

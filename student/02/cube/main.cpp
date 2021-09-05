@@ -13,10 +13,14 @@ int main()
     int tulos = 0;
     tulos = pow(luku,3);
 
-    if ((tulos / luku) / luku == luku) {
+    if (luku == 0) {
+        cout << "The cube of " << luku << " is " << tulos << ".";
+    } else if ((tulos / luku) / luku == luku) {
         cout << "The cube of " << luku << " is " << tulos << ".";
     } else {
         cout << "Error! The cube of " << luku << " is not " << tulos << ".";
     }
+
+
 
 }

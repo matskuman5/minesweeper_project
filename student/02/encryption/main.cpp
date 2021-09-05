@@ -6,7 +6,7 @@ using namespace std;
 
 bool check_english(string s) {
     bool b = true;
-    for (int i = 0; i < s.length(); ++i) {
+    for (long unsigned int i = 0; i < s.length(); ++i) {
         char c = s.at(i);
         if(c < 97 || c > 122) {
             b = false;
@@ -27,7 +27,7 @@ bool check_all_letters(string s) {
 
     //calculate sum of all characters in the string
     int key_sum = 0;
-    for (int i = 0; i < s.length(); ++i) {
+    for (long unsigned int i = 0; i < s.length(); ++i) {
         char c = s.at(i);
         key_sum += c;
     }
@@ -48,7 +48,7 @@ string encrypt(string k, string t) {
     string blacklist= "";
 
     //go through all characters in the key
-    for (int i = 0; i < k.length(); ++i) {
+    for (long unsigned int i = 0; i < k.length(); ++i) {
 
         //select which character we're replacing, starting with 'a' (97)
         char char_to_replace = 97 + i;
@@ -58,7 +58,7 @@ string encrypt(string k, string t) {
 
 
         //go through all characters in the text
-        for (int j = 0; j < t.length(); ++j) {
+        for (long unsigned int j = 0; j < t.length(); ++j) {
 
             //if we find the character we're replacing, replace it
             if(t.at(j) == char_to_replace) {

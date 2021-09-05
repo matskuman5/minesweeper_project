@@ -32,7 +32,7 @@ bool check_all_letters(string s) {
         key_sum += c;
     }
 
-    cout << "sum and key sum: " << sum << " " << key_sum << endl;
+    //cout << "sum and key sum: " << sum << " " << key_sum << endl;
 
     //the sums should be the same if the string contains all characters a-z
     if (sum != key_sum) {
@@ -68,23 +68,23 @@ string encrypt(string k, string t) {
                     blacklist.append("a" + to_string(j) + "b");
 
                     string poop = string(1, replacement);
-                    cout << "character to replace found: " << string(1,t.at(j)) << ", replacing with " << poop << endl;
+                    //cout << "character to replace found: " << string(1,t.at(j)) << ", replacing with " << poop << endl;
                     t.replace(j,1,poop);
                 } else {
-                    cout << "not replacing " << j << " again" << endl;
+                    //cout << "not replacing " << j << " again" << endl;
                 }
 
 
             }
         }
 
-        cout << blacklist << endl;
+        //cout << blacklist << endl;
 
 
 
 
-        cout << t << endl;
-        cout << endl;
+        //cout << t << endl;
+        //cout << endl;
 
     }
 
@@ -99,9 +99,8 @@ int main()
     string key = "";
     string text = "";
     key = "qwertyuiopasdfghjklzxcvbnm";
-
-//    cout << "Enter the encryption key: ";
-//    getline(cin, key);
+    cout << "Enter the encryption key: ";
+    getline(cin, key);
 
     //check 1: key must be 26 characters long
     if (key.length() != 26) {

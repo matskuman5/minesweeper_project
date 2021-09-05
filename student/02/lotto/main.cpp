@@ -30,6 +30,8 @@ int main()
 
     if (pallot < 0 || arvottavat < 0) {
         cout << "The number of balls must be a positive number.";
+    } else if (arvottavat > pallot) {
+        cout << "The maximum number of drawn balls is the total amount of balls.";
     } else {
         cout << "The probability of guessing all " << arvottavat << " balls correctly is 1/" << lottorivien_maara(pallot,arvottavat);
     }

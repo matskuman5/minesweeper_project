@@ -124,7 +124,7 @@ int main()
     getline(cin, text);
 
     //check 4: text must contain only lowercase english letters
-    if (!check_english(key)) {
+    if (!check_english(text)) {
         cout << "Error! The text to be encrypted must contain only lower case characters.";
         return EXIT_FAILURE;
     }

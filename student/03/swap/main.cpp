@@ -3,7 +3,7 @@
 
 // Write your swap function here.
 
-int swap(int& i, int& j) {
+void swap(int& i, int& j) {
 
     int temp = i;
     i = j;

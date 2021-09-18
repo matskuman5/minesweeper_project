@@ -71,6 +71,33 @@ bool is_arithmetic_series(const std::vector<int>& ints) {
 
 }
 
+bool is_geometric_series(const std::vector<int>& ints) {
+
+    bool b = true;
+    int ratio;
+
+    for(int i = 0; i < ints.size() - 1; ++i) {
+
+        if(ints.at(i + 1) == 0) {
+            b = false; // let's not divide by 0
+            break;
+        }
+
+        if (i == 0 && ints.size() > 1) {
+            ratio = ints.at(i + 1) / ints.at(i);
+        }
+
+        if (ratio != ints.at(i + 1) / ints.at(i)) {
+            b = false;
+            break;
+        }
+
+    }
+
+    return b;
+
+}
+
 int main()
 {
     std::cout << "How many integers are there? ";
@@ -96,10 +123,10 @@ int main()
     else
         std::cout << "The integers do not form an arithmetic series" << std::endl;
 
-//    if(is_geometric_series(integers))
-//        std::cout << "The integers form a geometric series" << std::endl;
-//    else
-//        std::cout << "The integers do not form a geometric series" << std::endl;
+    if(is_geometric_series(integers))
+        std::cout << "The integers form a geometric series" << std::endl;
+    else
+        std::cout << "The integers do not form a geometric series" << std::endl;
 
     return EXIT_SUCCESS;
 }

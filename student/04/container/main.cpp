@@ -20,7 +20,7 @@ bool same_values(const std::vector<int>& ints) {
 
     bool b = true;
 
-    for(int i = 0; i < ints.size() - 1; ++i) {
+    for(unsigned long i = 0; i < ints.size() - 1; ++i) {
         if (!(ints.at(i) == ints.at(i + 1))) {
             b = false;
             break;
@@ -35,7 +35,7 @@ bool is_ordered_non_strict_ascending(const std::vector<int>& ints) {
 
     bool b = true;
 
-    for(int i = 0; i < ints.size() - 1; ++i) {
+    for(unsigned long i = 0; i < ints.size() - 1; ++i) {
         if (ints.at(i) > ints.at(i + 1)) {
             b = false;
             break;
@@ -51,7 +51,7 @@ bool is_arithmetic_series(const std::vector<int>& ints) {
     bool b = true;
     int difference;
 
-    for(int i = 0; i < ints.size() - 1; ++i) {
+    for(unsigned long i = 0; i < ints.size() - 1; ++i) {
 //        std::cout << "checking " << ints.at(i) << " and " << ints.at(i + 1) << std::endl;
         if (i == 0 && ints.size() > 1) {
 
@@ -76,7 +76,7 @@ bool is_geometric_series(const std::vector<int>& ints) {
     bool b = true;
     int ratio;
 
-    for(int i = 0; i < ints.size() - 1; ++i) {
+    for(unsigned long i = 0; i < ints.size() - 1; ++i) {
 
         if(ints.at(i + 1) == 0) {
             b = false; // let's not divide by 0

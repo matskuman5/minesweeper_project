@@ -61,7 +61,6 @@ std::vector< std::string > split(std::string string, char separator, bool skip_e
     } else {
         group.push_back(string.substr(last_separator_index + 1, string.size() - last_separator_index - 1));
     }
-    group.push_back(string.substr(last_separator_index + 1, string.size() - last_separator_index - 1));
 
 //    std::cout << std::endl;
 //    std::cout << std::endl;

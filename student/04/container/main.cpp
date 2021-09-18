@@ -20,8 +20,23 @@ bool same_values(const std::vector<int>& ints) {
 
     bool b = true;
 
-    for(int i = 0; i < ints.size() - 2; ++i) {
+    for(int i = 0; i < ints.size() - 1; ++i) {
         if (!(ints.at(i) == ints.at(i + 1))) {
+            b = false;
+            break;
+        }
+    }
+
+    return b;
+
+}
+
+bool is_ordered_non_strict_ascending(const std::vector<int>& ints) {
+
+    bool b = true;
+
+    for(int i = 0; i < ints.size() - 1; ++i) {
+        if (ints.at(i) > ints.at(i + 1)) {
             b = false;
             break;
         }
@@ -46,10 +61,10 @@ int main()
     else
         std::cout << "All the integers are not the same" << std::endl;
 
-//    if(is_ordered_non_strict_ascending(integers))
-//        std::cout << "The integers are in a non-strict ascending order" << std::endl;
-//    else
-//        std::cout << "The integers are not in a non-strict ascending order" << std::endl;
+    if(is_ordered_non_strict_ascending(integers))
+        std::cout << "The integers are in a non-strict ascending order" << std::endl;
+    else
+        std::cout << "The integers are not in a non-strict ascending order" << std::endl;
 
 //    if(is_arithmetic_series(integers))
 //        std::cout << "The integers form an arithmetic series" << std::endl;

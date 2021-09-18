@@ -49,7 +49,7 @@ bool is_ordered_non_strict_ascending(const std::vector<int>& ints) {
 bool is_arithmetic_series(const std::vector<int>& ints) {
 
     bool b = true;
-    int difference;
+    int difference = 0;
 
     for(unsigned long i = 0; i < ints.size() - 1; ++i) {
 //        std::cout << "checking " << ints.at(i) << " and " << ints.at(i + 1) << std::endl;
@@ -74,7 +74,7 @@ bool is_arithmetic_series(const std::vector<int>& ints) {
 bool is_geometric_series(const std::vector<int>& ints) {
 
     bool b = true;
-    int ratio;
+    int ratio = 0;
 
     for(unsigned long i = 0; i < ints.size() - 1; ++i) {
 

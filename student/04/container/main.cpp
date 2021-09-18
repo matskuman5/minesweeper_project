@@ -46,6 +46,31 @@ bool is_ordered_non_strict_ascending(const std::vector<int>& ints) {
 
 }
 
+bool is_arithmetic_series(const std::vector<int>& ints) {
+
+    bool b = true;
+    int difference;
+
+    for(int i = 0; i < ints.size() - 1; ++i) {
+//        std::cout << "checking " << ints.at(i) << " and " << ints.at(i + 1) << std::endl;
+        if (i == 0 && ints.size() > 1) {
+
+            difference = ints.at(i + 1) - ints.at(i);
+//            std::cout << "setting sum at " << difference << std::endl;
+        }
+
+        if (difference != ints.at(i + 1) - ints.at(i)) {
+//            std::cout << "sum of " << ints.at(i) + ints.at(i+1) << "is not good" << std::endl;
+            b = false;
+            break;
+        }
+
+    }
+
+    return b;
+
+}
+
 int main()
 {
     std::cout << "How many integers are there? ";
@@ -66,10 +91,10 @@ int main()
     else
         std::cout << "The integers are not in a non-strict ascending order" << std::endl;
 
-//    if(is_arithmetic_series(integers))
-//        std::cout << "The integers form an arithmetic series" << std::endl;
-//    else
-//        std::cout << "The integers do not form an arithmetic series" << std::endl;
+    if(is_arithmetic_series(integers))
+        std::cout << "The integers form an arithmetic series" << std::endl;
+    else
+        std::cout << "The integers do not form an arithmetic series" << std::endl;
 
 //    if(is_geometric_series(integers))
 //        std::cout << "The integers form a geometric series" << std::endl;

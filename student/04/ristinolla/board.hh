@@ -8,7 +8,8 @@ enum Direction { UP, DOWN, LEFT, RIGHT };
 class Board
 {
 public:
-    Board();
+
+    Board(int size);
 
     //prints the status of the board
     void print();

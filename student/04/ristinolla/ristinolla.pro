@@ -4,4 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        board.cpp \
         main.cpp
+
+HEADERS += \
+    board.hh

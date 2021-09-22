@@ -2,9 +2,6 @@
 #include "iostream"
 using namespace std;
 
-//Square::Square(int x, int y, int drops, Board* board ):
-//    x_(x), y_(y), drops_(drops), board_(board)
-
 Board::Board(int size):
 size_(size) {
 
@@ -38,5 +35,28 @@ void Board::print() {
         }
         cout << endl;
     }
+
+}
+
+bool Board::placeMarker(int x, int y, char symbol) {
+
+
+
+    //first, check that the input is correct
+
+
+    //decrement the coordinates by one because we really index the board from 0, not 1
+    --x;
+    --y;
+
+    //then, check that the square is not already filled
+
+
+
+    //check if the board would have to be extended to place the marker
+
+    //place the marker and check if the game has ended
+    board_.at(x).at(y) = symbol;
+    return true;
 
 }

@@ -19,16 +19,17 @@ int main() {
 
         while(true) {
             cout << "For X, enter coordinates: ";
-            int input_x;
+            string input_x;
             cin >> input_x;
-//            if(input_x == 'q') {
-//                cout << "Why on earth are you giving up the game?";
-//                exit = true;
-//                break;
-//            }
-            int input_y;
+            if(input_x == "q") {
+                cout << "Why on earth are you giving up the game?" << endl;
+                exit = true;
+                break;
+            }
+            string input_y;
             cin >> input_y;
 
+            //if we manage to place a marker succesfully, print the board again
             if (b.placeMarker(input_x, input_y, 'X')) {
                 break;
             }
@@ -42,7 +43,7 @@ int main() {
 
     }
 
-    cout << "Game over!";
+    cout << "Game over!" << endl;
     return EXIT_SUCCESS;
 
 

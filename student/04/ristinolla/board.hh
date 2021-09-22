@@ -2,6 +2,7 @@
 #define BOARD_HH
 
 #include <vector>
+#include <string>
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
 
@@ -21,7 +22,7 @@ public:
     //if placement would extend the board in one direction, calls extend()
     //if placing was succesful, also calls checkEnd()
     //returns whether the placement was succesful or not
-    bool placeMarker(int x, int y, char symbol);
+    bool placeMarker(std::string x, std::string y, char symbol);
 
 private:
 

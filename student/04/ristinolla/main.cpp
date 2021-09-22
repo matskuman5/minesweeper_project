@@ -9,6 +9,7 @@ const unsigned int INIT_BOARD_SIZE = 3;
 int main() {
 
     Board b = Board(INIT_BOARD_SIZE);
+    b.print();
 
 }
 

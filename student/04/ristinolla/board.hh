@@ -27,6 +27,7 @@ private:
     bool checkEnd();
 
     std::vector< std::vector< char > > board_;
+    int size_;
 
 };
 

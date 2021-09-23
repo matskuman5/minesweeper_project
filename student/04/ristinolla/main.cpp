@@ -19,8 +19,13 @@ int main() {
 
         string s = b.checkEnd();
         if(s != "null") {
-            cout << "X" << s << endl;
-            break;
+            if(s == "No empty spaces") {
+                cout << s << endl;
+                break;
+            } else {
+                cout << "X" << s << endl;
+                break;
+            }
         }
 
         while(true) {

@@ -237,7 +237,6 @@ string Board::checkEnd() {
 
     if(to_check != '.') {
         for(int x_y = 0; x_y < size_; x_y++ ) {
-            cout << "checking " << x_y << " : " << size_ - 1 - x_y << endl;
             if(board_.at(x_y).at(size_ - 1 - x_y) != to_check) {
                 victory = false;
             }
@@ -249,6 +248,22 @@ string Board::checkEnd() {
 
     if(victory) {
         return " won diagonally";
+    }
+
+    //finally, we check if the board is full or not (i.e. whether there any squares that are empty)
+    bool full = true;
+
+    for(int x = 0; x < size_; x++) {
+        for(int y = 0; y < size_; y++) {
+            if(board_.at(x).at(y) == '.') {
+                full = false;
+                break;
+            }
+        }
+    }
+
+    if(full) {
+        return "No empty places";
     }
 
     return "null";

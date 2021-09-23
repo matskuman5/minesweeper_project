@@ -7,11 +7,11 @@ size_(size) {
 
     //initialize an empty board by adding a dot to all squares
     for(int x = 0; x < size_; x++) {
-        vector < char > row;
+        vector < char > column;
         for(int y = 0; y < size_; y++) {
-            row.push_back('.');
+            column.push_back('.');
         }
-        board_.push_back(row);
+        board_.push_back(column);
     }
 
 }
@@ -39,6 +39,65 @@ void Board::print() {
 }
 
 void Board::extend(Direction d) {
+
+    //first, expand the board by one column...
+    vector < char > column;
+    for (int y = 0; y < size_; y++) {
+        column.push_back('.');
+    }
+    board_.push_back(column);
+
+    //... increase the size of the board ...
+    size_++;
+
+    //... then, extend all columns by one
+    for (int x = 0; x < size_; x++) {
+        board_.at(x).push_back('.');
+    }
+
+    //if we're extending NW, we need to move the markers
+    if(d == NW) {
+
+        //then, compile a list of the coordinates of the markers we have to move and erase them
+        vector< string > to_move;
+        for(int x = 0; x < size_; x++) {
+            for(int y = 0; y < size_; y++) {
+                if (board_.at(x).at(y) != '.') {
+                    to_move.push_back(to_string(x) + " " + to_string(y) + " " + to_string(board_.at(x).at(y)));
+                    board_.at(x).at(y) = '.';
+                }
+            }
+        }
+
+        //generate new coordinates for the markers depending on the direction they should move
+        for(string s : to_move) {
+
+            //first, turn the strings into two integers and a character
+            //spaghet
+            int space_index_1 = s.find(" ");
+            int space_index_2 = s.substr(space_index_1 + 1).find(" ") + space_index_1 + 1;
+            int x = stoi(s.substr(0,space_index_1));
+            int y = stoi(s.substr(space_index_1 + 1, space_index_2 - 1 - space_index_1));
+            s.erase(0, space_index_2 + 1);
+            char marker = stoi(s);
+
+            //then, modify the integers depending on the direction the markers should move
+            if(d == NW) {
+                x++;
+                y++;
+            } else {
+                x--;
+                y--;
+            }
+
+            //finally, place the markers in their new coordinates
+            board_.at(x).at(y) = marker;
+
+        }
+
+    }
+
+
 
 }
 
@@ -68,17 +127,22 @@ bool Board::placeMarker(string x_string, string y_string, char symbol) {
     --y;
 
     //make sure that the requested square is either in the board...
+    //TODO: FIX SE EXTENSION
     if(!((x < size_ && y < size_) && x != -1 && y != -1)) {
 
 
-        if (y == -1 && -1 < x && x < size_) { //... one square above the board ...
-            extend(UP);
+        if ((y == -1 && -1 < x && x < size_)) { //... one square above the board ...
+            extend(NW);
+            x++;
+            y++;
         } else if (y == size_ && -1 < x && x < size_) {  //... one square below the board ...
-            extend(DOWN);
+            extend(SE);
         } else if (x == -1 && -1 < y && y < size_) { //... one square to the left of the board ...
-            extend(LEFT);
+            extend(NW);
+            x++;
+            y++;
         } else if (x == size_ && -1 < y && y < size_) { // ... or one square to the right of the board
-            extend(RIGHT);
+            extend(SE);
         } else {
             cout << "Coordinate outside the board" << endl;
             return false;

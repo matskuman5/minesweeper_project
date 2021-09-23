@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-enum Direction { UP, DOWN, LEFT, RIGHT };
+enum Direction { NW, SE };
 
 class Board
 {

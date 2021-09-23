@@ -130,7 +130,6 @@ bool Board::placeMarker(string x_string, string y_string, char symbol) {
     //make sure that the requested square is either in the board...
     if(!((x < size_ && y < size_) && x != -1 && y != -1)) {
 
-
         if ((y == -1 && -1 < x && x < size_)) { //... one square above the board ...
             extend(NW);
             x++;

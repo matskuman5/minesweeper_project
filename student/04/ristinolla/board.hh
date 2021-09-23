@@ -24,7 +24,7 @@ public:
     bool placeMarker(std::string x, std::string y, char symbol);
 
     //returns a string describing how the game ended (victory or draw)
-    //if the game has not ended, returns nullptr
+    //if the game has not ended, returns "null"
     std::string checkEnd();
 
 private:

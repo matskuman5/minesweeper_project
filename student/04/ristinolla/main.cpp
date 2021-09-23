@@ -12,6 +12,8 @@ int main() {
 
     Board b = Board(INIT_BOARD_SIZE);
     bool exit = false;
+    int turn = 0;
+    char player;
 
     while(true) {
 
@@ -23,13 +25,19 @@ int main() {
                 cout << s << endl;
                 break;
             } else {
-                cout << "X" << s << endl;
+                cout << player << s << endl;
                 break;
             }
         }
 
+        if(turn % 2 == 0) {
+            player = 'X';
+        } else {
+            player = '0';
+        }
+
         while(true) {
-            cout << "For X, enter coordinates: ";
+            cout << "For " << player << ", enter coordinates: ";
             string input_x;
             cin >> input_x;
             if(input_x == "q") {
@@ -42,7 +50,7 @@ int main() {
 
             //if we manage to place a marker succesfully, check if the game has ended
             //if not, we repeat and change turns
-            if (b.placeMarker(input_x, input_y, 'X')) {                
+            if (b.placeMarker(input_x, input_y, player)) {
                 break;
             }
         }
@@ -50,6 +58,8 @@ int main() {
         if(exit) {
             break;
         }
+
+        turn++;
 
 
 

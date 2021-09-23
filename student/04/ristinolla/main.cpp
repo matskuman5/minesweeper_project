@@ -17,6 +17,12 @@ int main() {
 
         b.print();
 
+        string s = b.checkEnd();
+        if(s != "null") {
+            cout << "X" << s << endl;
+            break;
+        }
+
         while(true) {
             cout << "For X, enter coordinates: ";
             string input_x;
@@ -29,8 +35,9 @@ int main() {
             string input_y;
             cin >> input_y;
 
-            //if we manage to place a marker succesfully, print the board again
-            if (b.placeMarker(input_x, input_y, 'X')) {
+            //if we manage to place a marker succesfully, check if the game has ended
+            //if not, we repeat and change turns
+            if (b.placeMarker(input_x, input_y, 'X')) {                
                 break;
             }
         }

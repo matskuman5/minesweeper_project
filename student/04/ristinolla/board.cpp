@@ -41,6 +41,7 @@ void Board::print() {
 void Board::extend(Direction d) {
 
     //first, expand the board by one column...
+    //TODO CLEAN THIS UP
     vector < char > column;
     for (int y = 0; y < size_; y++) {
         column.push_back('.');
@@ -127,7 +128,6 @@ bool Board::placeMarker(string x_string, string y_string, char symbol) {
     --y;
 
     //make sure that the requested square is either in the board...
-    //TODO: FIX SE EXTENSION
     if(!((x < size_ && y < size_) && x != -1 && y != -1)) {
 
 
@@ -156,12 +156,102 @@ bool Board::placeMarker(string x_string, string y_string, char symbol) {
         return false;
     }
 
-    //finally, place the marker and check if the game has ended
+    //finally, place the marker
     board_.at(x).at(y) = symbol;
-
-    //checkEnd();
     return true;
 
+}
+
+string Board::checkEnd() {
+
+    //check columns first
+    for(int x = 0; x < size_; x++) {
+
+        bool victory = true;
+        char to_check = board_.at(x).at(0);
+
+        if(to_check == '.') {
+            continue;
+        }
+
+        for(int y = 0; y < size_; y++) {
+            if(board_.at(x).at(y) != to_check) {
+                victory = false;
+                break;
+            }
+        }
+
+        if(victory) {
+            return " won vertically";
+        }
+
+    }
+
+    //then check rows
+    for(int y = 0; y < size_; y++) {
+
+        bool victory = true;
+        char to_check = board_.at(0).at(y);
+
+        if(to_check == '.') {
+            continue;
+        }
+
+        for(int x = 0; x < size_; x++) {
+            if(board_.at(x).at(y) != to_check) {
+                victory = false;
+                break;
+            }
+        }
+
+        if(victory) {
+            return " won horizontally";
+        }
+
+    }
+
+    //then check diagonals, first top left to bottom right
+
+    char to_check = board_.at(0).at(0);
+
+    bool victory = true;
+
+    if(to_check != '.') {
+        for(int x_y = 0; x_y < size_; x_y++) {
+            if(board_.at(x_y).at(x_y) != to_check) {
+                victory = false;
+            }
+        }
+    } else {
+        victory = false;
+    }
+
+    if(victory) {
+        return " won diagonally";
+    }
+
+
+    //then bottom left to top right
+    victory = true;
+    to_check = board_.at(0).at(size_ - 1);
+
+    if(to_check != '.') {
+        for(int x_y = 0; x_y < size_; x_y++ ) {
+            cout << "checking " << x_y << " : " << size_ - 1 - x_y << endl;
+            if(board_.at(x_y).at(size_ - 1 - x_y) != to_check) {
+                victory = false;
+            }
+        }
+    } else {
+        victory = false;
+    }
+
+
+    if(victory) {
+        return " won diagonally";
+    }
+
+    return "null";
 }
 
 

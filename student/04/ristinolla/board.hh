@@ -20,17 +20,17 @@ public:
     //first checks the input to make sure it can be used (the inputs are integers and within the board)
     //then checks whether the square is already filled
     //if placement would extend the board in one direction, calls extend()
-    //if placing was succesful, also calls checkEnd()
-    //returns whether the placement was succesful or not
+    //returns whether the placement was successful or not
     bool placeMarker(std::string x, std::string y, char symbol);
+
+    //returns a string describing how the game ended (victory or draw)
+    //if the game has not ended, returns nullptr
+    std::string checkEnd();
 
 private:
 
     //extends the board by one in the specified direction
     void extend(Direction d);
-
-    //returns true if either of the players has won or if the board is full
-    bool checkEnd();
 
     std::vector< std::vector< char > > board_;
     int size_;

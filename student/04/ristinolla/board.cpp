@@ -51,7 +51,6 @@ void Board::print() {
 void Board::extend(Direction d) {
 
     //first, expand the board by one column...
-    //TODO CLEAN THIS UP
     vector < char > column;
     for (int y = 0; y < size_; y++) {
         column.push_back('.');
@@ -66,10 +65,10 @@ void Board::extend(Direction d) {
         board_.at(x).push_back('.');
     }
 
-    //if we're extending NW, we need to move the markers
+    //if we're extending north-west, we need to move the markers
     if(d == NW) {
 
-        //then, compile a list of the coordinates of the markers we have to move and erase them
+        //first, compile a list of the coordinates of the markers we have to move and erase them
         vector< string > to_move;
         for(int x = 0; x < size_; x++) {
             for(int y = 0; y < size_; y++) {
@@ -80,11 +79,9 @@ void Board::extend(Direction d) {
             }
         }
 
-        //generate new coordinates for the markers depending on the direction they should move
         for(string s : to_move) {
 
-            //first, turn the strings into two integers and a character
-            //spaghet
+            //we turn the strings we gathered into two integers and a character
             int space_index_1 = s.find(" ");
             int space_index_2 = s.substr(space_index_1 + 1).find(" ") + space_index_1 + 1;
             int x = stoi(s.substr(0,space_index_1));
@@ -92,14 +89,9 @@ void Board::extend(Direction d) {
             s.erase(0, space_index_2 + 1);
             char marker = stoi(s);
 
-            //then, modify the integers depending on the direction the markers should move
-            if(d == NW) {
-                x++;
-                y++;
-            } else {
-                x--;
-                y--;
-            }
+            //then, move the coordinates one square to the south-east
+            x++;
+            y++;
 
             //finally, place the markers in their new coordinates
             board_.at(x).at(y) = marker;
@@ -114,7 +106,7 @@ void Board::extend(Direction d) {
 
 bool Board::placeMarker(string x_string, string y_string, char symbol) {
 
-    //first, check that the input coordinates contains only digits
+    //first, check that the input coordinates contain only digits
     for(char c : x_string) {
         if(!isdigit(c)) {
             cout << "Coordinate outside the board" << endl;
@@ -137,21 +129,15 @@ bool Board::placeMarker(string x_string, string y_string, char symbol) {
     --x;
     --y;
 
-    //make sure that the requested square is either in the board...
+    //check that the coordinates are within the board or in expandable range
     if(!((x < size_ && y < size_) && x != -1 && y != -1)) {
 
-        if ((y == -1 && -1 < x && x < size_)) { //... one square above the board ...
+        if ((x == size_ && -1 < y && y <= size_) || (y == size_ && -1 < x && x <= size_)) {
+            extend(SE);
+        } else if ((x == -1 && -1 <= y && y < size_) || (y == -1 && -1 <= x && x < size_)) {
             extend(NW);
             x++;
             y++;
-        } else if (y == size_ && -1 < x && x < size_) {  //... one square below the board ...
-            extend(SE);
-        } else if (x == -1 && -1 < y && y < size_) { //... one square to the left of the board ...
-            extend(NW);
-            x++;
-            y++;
-        } else if (x == size_ && -1 < y && y < size_) { // ... or one square to the right of the board
-            extend(SE);
         } else {
             cout << "Coordinate outside the board" << endl;
             return false;

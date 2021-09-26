@@ -22,13 +22,23 @@ void Board::print() {
 
     for(int x = 0; x < size_; x++) {
         cout << " ";
-        cout << x + 1;
+        if (x + 1 >= 10) {
+            cout << (x + 1) % 10;
+        } else {
+            cout << x + 1;
+        }
     }
 
     cout << endl;
 
     for(int y = 0; y < size_; y++) {
-        cout << y + 1;
+
+        if (y + 1 >= 10) {
+            cout << (y + 1) % 10;
+        } else {
+            cout << y + 1;
+        }
+
         for(int x = 0; x < size_; x++) {
             cout << " ";
             cout << board_.at(x).at(y);

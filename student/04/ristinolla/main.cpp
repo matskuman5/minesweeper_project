@@ -13,7 +13,7 @@ int main() {
     Board b = Board(INIT_BOARD_SIZE);
     bool exit = false;
     int turn = 0;
-    char player;
+    char player = 'X';
 
     while(true) {
 
@@ -21,11 +21,17 @@ int main() {
 
         string s = b.checkEnd();
         if(s != "null") {
-            if(s == "No empty spaces") {
+            if(s == "No empty places") {
                 cout << s << endl;
                 break;
             } else {
-                cout << player << s << endl;
+                string winner;
+                if (player == 'X') {
+                    winner = "Cross";
+                } else {
+                    winner = "Nought";
+                }
+                cout << winner << s << endl;
                 break;
             }
         }
@@ -37,7 +43,7 @@ int main() {
         }
 
         while(true) {
-            cout << "For " << player << ", enter coordinates: ";
+            cout << "For " << player << ", enter coordinates: x y>";
             string input_x;
             cin >> input_x;
             if(input_x == "q") {

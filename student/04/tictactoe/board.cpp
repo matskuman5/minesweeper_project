@@ -54,6 +54,8 @@ void Board::print() const {
         cout << endl;
     }
 
+    cout << endl;
+
 }
 
 void Board::extend(const Direction d) {

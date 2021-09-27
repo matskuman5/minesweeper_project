@@ -2,7 +2,7 @@
 #include "iostream"
 using namespace std;
 
-Board::Board(int size):
+Board::Board(const int size):
 size_(size) {
 
     //initialize an empty board by adding a dot to all squares
@@ -16,7 +16,7 @@ size_(size) {
 
 }
 
-void Board::print() {
+void Board::print() const {
 
     cout << " ";
 
@@ -48,7 +48,7 @@ void Board::print() {
 
 }
 
-void Board::extend(Direction d) {
+void Board::extend(const Direction d) {
 
     //first, expand the board by one column...
     vector < char > column;
@@ -95,7 +95,7 @@ void Board::extend(Direction d) {
 
 }
 
-bool Board::placeMarker(string x_string, string y_string, char symbol) {
+bool Board::placeMarker(const string& x_string, const string& y_string, const char symbol) {
 
     //first, check that the input coordinates contain only digits
     for(const auto& s : {x_string, y_string}) {
@@ -143,7 +143,7 @@ bool Board::placeMarker(string x_string, string y_string, char symbol) {
 
 }
 
-string Board::checkEnd() {
+string Board::checkEnd() const {
 
     //check columns first
     for(int x = 0; x < size_; x++) {

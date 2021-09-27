@@ -4,13 +4,13 @@
 
 using namespace std;
 
-const unsigned int INIT_BOARD_SIZE = 3;
+const unsigned int INIT_GRID_SIZE = 3;
 
 int main() {
 
     cout << "Start game:" << endl;
 
-    Board b = Board(INIT_BOARD_SIZE);
+    Board b = Board(INIT_GRID_SIZE);
     bool exit = false;
     int turn = 0;
     char player = 'X';

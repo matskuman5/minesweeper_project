@@ -5,13 +5,13 @@ using namespace std;
 Board::Board(const int size):
 size_(size) {
 
-    //initialize an empty board by adding a dot to all squares
+    //initialize an empty grid by adding a dot to all squares
     for(int x = 0; x < size_; x++) {
         vector < char > column;
         for(int y = 0; y < size_; y++) {
             column.push_back('.');
         }
-        board_.push_back(column);
+        grid_.push_back(column);
     }
 
 }
@@ -41,7 +41,7 @@ void Board::print() const {
 
         for(int x = 0; x < size_; x++) {
             cout << " ";
-            cout << board_.at(x).at(y);
+            cout << grid_.at(x).at(y);
         }
         cout << endl;
     }
@@ -50,48 +50,46 @@ void Board::print() const {
 
 void Board::extend(const Direction d) {
 
-    //first, expand the board by one column...
+    //first, expand the grid by one column...
     vector < char > column;
     for (int y = 0; y < size_; y++) {
         column.push_back('.');
     }
-    board_.push_back(column);
+    grid_.push_back(column);
 
-    //... increase the size of the board ...
+    //... increase the size of the grid ...
     size_++;
 
     //... then, extend all columns by one
     for (int x = 0; x < size_; x++) {
-        board_.at(x).push_back('.');
+        grid_.at(x).push_back('.');
     }
 
     //if we're extending north-west, we need to move the markers
     if(d == NW) {
 
-        //create a new board with the new size
-        std::vector< std::vector< char > > new_board;
+        //create a new grid with the new size
+        std::vector< std::vector< char > > new_grid;
 
         for(int x = 0; x < size_; x++) {
             vector < char > column;
             for(int y = 0; y < size_; y++) {
                 column.push_back('.');
             }
-            new_board.push_back(column);
+            new_grid.push_back(column);
         }
 
-        //move all the markers from the old board to the new board, just one square to the south-east
+        //move all the markers from the old grid to the new grid, just one square to the south-east
         for(int x = 0; x < size_ - 1; x++) {
             for(int y = 0; y < size_ - 1; y++) {
-                new_board.at(x + 1).at(y + 1) = board_.at(x).at(y);
+                new_grid.at(x + 1).at(y + 1) = grid_.at(x).at(y);
             }
         }
 
-        //replace the old board with the new board
-        board_ = new_board;
+        //replace the old grid with the new grid
+        grid_ = new_grid;
 
     }
-
-
 
 }
 
@@ -111,13 +109,12 @@ bool Board::placeMarker(const string& x_string, const string& y_string, const ch
     int x = stoi(x_string);
     int y = stoi(y_string);
 
-    //decrement the coordinates by one because we really index the board from 0, not 1
+    //decrement the coordinates by one because we really index the grid from 0, not 1
     --x;
     --y;
 
-    //check that the coordinates are within the board or in expandable range
+    //check that the coordinates are within the grid or in expandable range
     if(!((x < size_ && y < size_) && x != -1 && y != -1)) {
-
         if ((x == size_ && -1 < y && y <= size_) || (y == size_ && -1 < x && x <= size_)) {
             extend(SE);
         } else if ((x == -1 && -1 <= y && y < size_) || (y == -1 && -1 <= x && x < size_)) {
@@ -132,13 +129,13 @@ bool Board::placeMarker(const string& x_string, const string& y_string, const ch
     }
 
     //then, check that the square is not already filled
-    if(!(board_.at(x).at(y) == '.')) {
+    if(!(grid_.at(x).at(y) == '.')) {
         cout << "The given place is already occupied" << endl;
         return false;
     }
 
     //finally, place the marker
-    board_.at(x).at(y) = symbol;
+    grid_.at(x).at(y) = symbol;
     return true;
 
 }
@@ -149,14 +146,14 @@ string Board::checkEnd() const {
     for(int x = 0; x < size_; x++) {
 
         bool victory = true;
-        char to_check = board_.at(x).at(0);
+        char to_check = grid_.at(x).at(0);
 
         if(to_check == '.') {
             continue;
         }
 
         for(int y = 0; y < size_; y++) {
-            if(board_.at(x).at(y) != to_check) {
+            if(grid_.at(x).at(y) != to_check) {
                 victory = false;
                 break;
             }
@@ -172,14 +169,14 @@ string Board::checkEnd() const {
     for(int y = 0; y < size_; y++) {
 
         bool victory = true;
-        char to_check = board_.at(0).at(y);
+        char to_check = grid_.at(0).at(y);
 
         if(to_check == '.') {
             continue;
         }
 
         for(int x = 0; x < size_; x++) {
-            if(board_.at(x).at(y) != to_check) {
+            if(grid_.at(x).at(y) != to_check) {
                 victory = false;
                 break;
             }
@@ -193,13 +190,13 @@ string Board::checkEnd() const {
 
     //then check diagonals, first top left to bottom right
 
-    char to_check = board_.at(0).at(0);
+    char to_check = grid_.at(0).at(0);
 
     bool victory = true;
 
     if(to_check != '.') {
         for(int x_y = 0; x_y < size_; x_y++) {
-            if(board_.at(x_y).at(x_y) != to_check) {
+            if(grid_.at(x_y).at(x_y) != to_check) {
                 victory = false;
             }
         }
@@ -214,11 +211,11 @@ string Board::checkEnd() const {
 
     //then bottom left to top right
     victory = true;
-    to_check = board_.at(0).at(size_ - 1);
+    to_check = grid_.at(0).at(size_ - 1);
 
     if(to_check != '.') {
         for(int x_y = 0; x_y < size_; x_y++ ) {
-            if(board_.at(x_y).at(size_ - 1 - x_y) != to_check) {
+            if(grid_.at(x_y).at(size_ - 1 - x_y) != to_check) {
                 victory = false;
             }
         }
@@ -236,7 +233,7 @@ string Board::checkEnd() const {
 
     for(int x = 0; x < size_; x++) {
         for(int y = 0; y < size_; y++) {
-            if(board_.at(x).at(y) == '.') {
+            if(grid_.at(x).at(y) == '.') {
                 full = false;
                 break;
             }

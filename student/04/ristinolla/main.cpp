@@ -54,8 +54,6 @@ int main() {
             string input_y;
             cin >> input_y;
 
-            //if we manage to place a marker succesfully, check if the game has ended
-            //if not, we repeat and change turns
             if (b.placeMarker(input_x, input_y, player)) {
                 break;
             }
@@ -66,8 +64,6 @@ int main() {
         }
 
         turn++;
-
-
 
     }
 

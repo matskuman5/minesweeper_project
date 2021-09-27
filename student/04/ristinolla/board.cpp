@@ -98,17 +98,12 @@ void Board::extend(Direction d) {
 bool Board::placeMarker(string x_string, string y_string, char symbol) {
 
     //first, check that the input coordinates contain only digits
-    for(char c : x_string) {
-        if(!isdigit(c)) {
-            cout << "Coordinate outside the board" << endl;
-            return false;
-        }
-    }
-
-    for(char c : y_string) {
-        if(!isdigit(c)) {
-            cout << "Coordinate outside the board" << endl;
-            return false;
+    for(const auto& s : {x_string, y_string}) {
+        for(char c : s) {
+            if(!isdigit(c)) {
+                cout << "Coordinate outside the board" << endl;
+                return false;
+            }
         }
     }
 

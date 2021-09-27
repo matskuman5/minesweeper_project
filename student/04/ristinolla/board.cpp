@@ -68,35 +68,26 @@ void Board::extend(Direction d) {
     //if we're extending north-west, we need to move the markers
     if(d == NW) {
 
-        //first, compile a list of the coordinates of the markers we have to move and erase them
-        vector< string > to_move;
+        //create a new board with the new size
+        std::vector< std::vector< char > > new_board;
+
         for(int x = 0; x < size_; x++) {
+            vector < char > column;
             for(int y = 0; y < size_; y++) {
-                if (board_.at(x).at(y) != '.') {
-                    to_move.push_back(to_string(x) + " " + to_string(y) + " " + to_string(board_.at(x).at(y)));
-                    board_.at(x).at(y) = '.';
-                }
+                column.push_back('.');
+            }
+            new_board.push_back(column);
+        }
+
+        //move all the markers from the old board to the new board, just one square to the south-east
+        for(int x = 0; x < size_ - 1; x++) {
+            for(int y = 0; y < size_ - 1; y++) {
+                new_board.at(x + 1).at(y + 1) = board_.at(x).at(y);
             }
         }
 
-        for(string s : to_move) {
-
-            //we turn the strings we gathered into two integers and a character
-            int space_index_1 = s.find(" ");
-            int space_index_2 = s.substr(space_index_1 + 1).find(" ") + space_index_1 + 1;
-            int x = stoi(s.substr(0,space_index_1));
-            int y = stoi(s.substr(space_index_1 + 1, space_index_2 - 1 - space_index_1));
-            s.erase(0, space_index_2 + 1);
-            char marker = stoi(s);
-
-            //then, move the coordinates one square to the south-east
-            x++;
-            y++;
-
-            //finally, place the markers in their new coordinates
-            board_.at(x).at(y) = marker;
-
-        }
+        //replace the old board with the new board
+        board_ = new_board;
 
     }
 

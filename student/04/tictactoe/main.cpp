@@ -65,7 +65,7 @@ int main() {
         }
 
         while(true) {
-            cout << "For " << player << ", enter coordinates: x y>";
+            cout << "For " << player << ", enter coordinates: x y> ";
             string input_x;
             cin >> input_x;
             if(input_x == "q") {

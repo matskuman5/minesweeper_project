@@ -1,14 +1,20 @@
+//Code author:
+//Name: Matias Selin
+//Student Number: 150181798
+//Username: vxmase
+//E-Mail: matias.selin@tuni.fi
+
 #include "board.hh"
 #include "iostream"
 using namespace std;
 
 Board::Board(const int size):
-size_(size) {
+grid_size_(size) {
 
     //initialize an empty grid by adding a dot to all squares
-    for(int x = 0; x < size_; x++) {
+    for(int x = 0; x < grid_size_; x++) {
         vector < char > column;
-        for(int y = 0; y < size_; y++) {
+        for(int y = 0; y < grid_size_; y++) {
             column.push_back('.');
         }
         grid_.push_back(column);
@@ -18,9 +24,11 @@ size_(size) {
 
 void Board::print() const {
 
+    //note: we print the indexes + 1 because we index from 0 (as normal) but we want to display as indexing from 1
+
     cout << " ";
 
-    for(int x = 0; x < size_; x++) {
+    for(int x = 0; x < grid_size_; x++) {
         cout << " ";
         if (x + 1 >= 10) {
             cout << (x + 1) % 10;
@@ -31,7 +39,7 @@ void Board::print() const {
 
     cout << endl;
 
-    for(int y = 0; y < size_; y++) {
+    for(int y = 0; y < grid_size_; y++) {
 
         if (y + 1 >= 10) {
             cout << (y + 1) % 10;
@@ -39,7 +47,7 @@ void Board::print() const {
             cout << y + 1;
         }
 
-        for(int x = 0; x < size_; x++) {
+        for(int x = 0; x < grid_size_; x++) {
             cout << " ";
             cout << grid_.at(x).at(y);
         }
@@ -52,16 +60,16 @@ void Board::extend(const Direction d) {
 
     //first, expand the grid by one column...
     vector < char > column;
-    for (int y = 0; y < size_; y++) {
+    for (int y = 0; y < grid_size_; y++) {
         column.push_back('.');
     }
     grid_.push_back(column);
 
     //... increase the size of the grid ...
-    size_++;
+    grid_size_++;
 
     //... then, extend all columns by one
-    for (int x = 0; x < size_; x++) {
+    for (int x = 0; x < grid_size_; x++) {
         grid_.at(x).push_back('.');
     }
 
@@ -71,17 +79,17 @@ void Board::extend(const Direction d) {
         //create a new grid with the new size
         std::vector< std::vector< char > > new_grid;
 
-        for(int x = 0; x < size_; x++) {
+        for(int x = 0; x < grid_size_; x++) {
             vector < char > column;
-            for(int y = 0; y < size_; y++) {
+            for(int y = 0; y < grid_size_; y++) {
                 column.push_back('.');
             }
             new_grid.push_back(column);
         }
 
         //move all the markers from the old grid to the new grid, just one square to the south-east
-        for(int x = 0; x < size_ - 1; x++) {
-            for(int y = 0; y < size_ - 1; y++) {
+        for(int x = 0; x < grid_size_ - 1; x++) {
+            for(int y = 0; y < grid_size_ - 1; y++) {
                 new_grid.at(x + 1).at(y + 1) = grid_.at(x).at(y);
             }
         }
@@ -114,10 +122,10 @@ bool Board::placeMarker(const string& x_string, const string& y_string, const ch
     --y;
 
     //check that the coordinates are within the grid or in expandable range
-    if(!((x < size_ && y < size_) && x != -1 && y != -1)) {
-        if ((x == size_ && -1 < y && y <= size_) || (y == size_ && -1 < x && x <= size_)) {
+    if(!((x < grid_size_ && y < grid_size_) && x != -1 && y != -1)) {
+        if ((x == grid_size_ && -1 < y && y <= grid_size_) || (y == grid_size_ && -1 < x && x <= grid_size_)) {
             extend(SE);
-        } else if ((x == -1 && -1 <= y && y < size_) || (y == -1 && -1 <= x && x < size_)) {
+        } else if ((x == -1 && -1 <= y && y < grid_size_) || (y == -1 && -1 <= x && x < grid_size_)) {
             extend(NW);
             x++;
             y++;
@@ -143,7 +151,7 @@ bool Board::placeMarker(const string& x_string, const string& y_string, const ch
 string Board::checkEnd() const {
 
     //check columns first
-    for(int x = 0; x < size_; x++) {
+    for(int x = 0; x < grid_size_; x++) {
 
         bool victory = true;
         char to_check = grid_.at(x).at(0);
@@ -152,7 +160,7 @@ string Board::checkEnd() const {
             continue;
         }
 
-        for(int y = 0; y < size_; y++) {
+        for(int y = 0; y < grid_size_; y++) {
             if(grid_.at(x).at(y) != to_check) {
                 victory = false;
                 break;
@@ -166,7 +174,7 @@ string Board::checkEnd() const {
     }
 
     //then check rows
-    for(int y = 0; y < size_; y++) {
+    for(int y = 0; y < grid_size_; y++) {
 
         bool victory = true;
         char to_check = grid_.at(0).at(y);
@@ -175,7 +183,7 @@ string Board::checkEnd() const {
             continue;
         }
 
-        for(int x = 0; x < size_; x++) {
+        for(int x = 0; x < grid_size_; x++) {
             if(grid_.at(x).at(y) != to_check) {
                 victory = false;
                 break;
@@ -195,7 +203,7 @@ string Board::checkEnd() const {
     bool victory = true;
 
     if(to_check != '.') {
-        for(int x_y = 0; x_y < size_; x_y++) {
+        for(int x_y = 0; x_y < grid_size_; x_y++) {
             if(grid_.at(x_y).at(x_y) != to_check) {
                 victory = false;
             }
@@ -211,11 +219,11 @@ string Board::checkEnd() const {
 
     //then bottom left to top right
     victory = true;
-    to_check = grid_.at(0).at(size_ - 1);
+    to_check = grid_.at(0).at(grid_size_ - 1);
 
     if(to_check != '.') {
-        for(int x_y = 0; x_y < size_; x_y++ ) {
-            if(grid_.at(x_y).at(size_ - 1 - x_y) != to_check) {
+        for(int x_y = 0; x_y < grid_size_; x_y++ ) {
+            if(grid_.at(x_y).at(grid_size_ - 1 - x_y) != to_check) {
                 victory = false;
             }
         }
@@ -231,8 +239,8 @@ string Board::checkEnd() const {
     //finally, we check if the board is full or not (i.e. whether there any squares that are empty)
     bool full = true;
 
-    for(int x = 0; x < size_; x++) {
-        for(int y = 0; y < size_; y++) {
+    for(int x = 0; x < grid_size_; x++) {
+        for(int y = 0; y < grid_size_; y++) {
             if(grid_.at(x).at(y) == '.') {
                 full = false;
                 break;

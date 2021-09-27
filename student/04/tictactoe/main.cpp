@@ -45,7 +45,6 @@ int main() {
         if(s != "null") {
             if(s == "No empty places") {
                 cout << s << endl;
-                break;
             } else {
                 string winner;
                 if (player == 'X') {
@@ -54,9 +53,9 @@ int main() {
                     winner = "Nought";
                 }
                 cout << winner << s << endl;
-                break;
             }
             cout << "Game over!" << endl;
+            break;
         }
 
         if(turn % 2 == 0) {

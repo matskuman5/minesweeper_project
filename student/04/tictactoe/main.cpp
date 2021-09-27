@@ -54,6 +54,7 @@ int main() {
                     winner = "Nought";
                 }
                 cout << winner << s << endl;
+                cout << "Game over!" << endl;
                 break;
             }
         }
@@ -69,7 +70,7 @@ int main() {
             string input_x;
             cin >> input_x;
             if(input_x == "q") {
-                cout << "Why on earth are you giving up the game?" << endl;
+                cout << "Why on earth you are giving up the game?" << endl;
                 exit = true;
                 break;
             }
@@ -89,7 +90,6 @@ int main() {
 
     }
 
-    cout << "Game over!" << endl;
     return EXIT_SUCCESS;
 
 

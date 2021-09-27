@@ -54,9 +54,9 @@ int main() {
                     winner = "Nought";
                 }
                 cout << winner << s << endl;
-                cout << "Game over!" << endl;
                 break;
             }
+            cout << "Game over!" << endl;
         }
 
         if(turn % 2 == 0) {

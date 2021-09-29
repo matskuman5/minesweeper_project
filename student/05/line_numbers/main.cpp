@@ -15,9 +15,9 @@ int main()
     getline(cin, output_file);
 
     ifstream reader(input_file);
-    ofstream printer(output_file);
 
     if(reader) {
+        ofstream printer(output_file);
         string line;
         int i = 0;
         while(getline(reader, line)) {

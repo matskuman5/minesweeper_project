@@ -22,7 +22,7 @@ int main()
         int i = 0;
         while(getline(reader, line)) {
             i++;
-            string new_line = to_string(i) + " " + line;
+            string new_line = to_string(i) + " " + line + "\n";
             printer << new_line;
         }
         reader.close();

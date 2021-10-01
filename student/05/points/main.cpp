@@ -38,7 +38,7 @@ int main()
 
         }
 
-        cout << "Final scores" << endl;
+        cout << "Final scores:" << endl;
 
         map<string, int>::iterator i;
         i = competitors.begin();

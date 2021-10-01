@@ -18,8 +18,10 @@ int main()
         {
             return EXIT_SUCCESS;
         }
+        if(word.length() >= 3) {
+            std::shuffle(word.begin() + 1, word.end() - 1, generator);
+        }
 
-        std::shuffle(word.begin() + 1, word.end() - 1, generator);
 	
         std::cout << word << std::endl;
     }

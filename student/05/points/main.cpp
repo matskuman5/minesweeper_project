@@ -44,7 +44,8 @@ int main()
         i = competitors.begin();
 
         while(i != competitors.end()) {
-            cout << i -> first << " : " << i -> second;
+            cout << i -> first << " : " << i -> second << endl;
+            i++;
         }
 
     } else {

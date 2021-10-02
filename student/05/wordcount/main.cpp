@@ -38,17 +38,17 @@ int main()
 
         }
 
-        for (auto s : lines) {
-            cout << s << endl;
-        }
+//        for (auto s : lines) {
+//            cout << s << endl;
+//        }
 
-        cout << endl;
+//        cout << endl;
 
-        for (auto s : words) {
-            cout << s << endl;
-        }
+//        for (auto s : words) {
+//            cout << s << endl;
+//        }
 
-        cout << endl;
+//        cout << endl;
 
         for (auto w : words) {
 
@@ -82,6 +82,9 @@ int main()
 
     } else {
         cout << "Error! The file " << input << " cannot be opened.";
+        return EXIT_FAILURE;
     }
+
+    return EXIT_SUCCESS;
 
 }

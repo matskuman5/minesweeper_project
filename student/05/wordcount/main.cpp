@@ -57,7 +57,13 @@ int main()
 
             for (int i = 0; i < lines.size(); i++) {
 
-                if(lines.at(i).find(w) != string::npos) {
+                if(lines.at(i).find(" " + w + " ") != string::npos) {
+                    occurrences++;
+                    occurrence_lines.push_back(i + 1);
+                } else if (lines.at(i).find(w) == 0) {
+                    occurrences++;
+                    occurrence_lines.push_back(i + 1);
+                } else if (lines.at(i).find(w) + w.length() == lines.at(i).length()){
                     occurrences++;
                     occurrence_lines.push_back(i + 1);
                 }

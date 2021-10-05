@@ -34,13 +34,18 @@ int sum_recursive(std::vector<int>& v){
     // Add your implementation here
 
 
+
+    if(v.size() == 0) {
+        return 0;
+    }
+
     int sum = v.at(0);
     if(v.size() == 1) {
         return sum;
     } else {
         v.at(0) = v.at(0) + v.at(v.size() - 1);
         v.pop_back();
-        sum_recursive(v);
+        return sum_recursive(v);
     }
 
 }

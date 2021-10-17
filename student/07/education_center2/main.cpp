@@ -5,6 +5,8 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -47,6 +49,22 @@ std::vector<std::string> split_ignoring_quoted_delim(const std::string& str,
 
 int main()
 {
-    return EXIT_SUCCESS;
+
+    cout << "Input file: ";
+    string input_file;
+    getline(cin, input_file);
+
+    ifstream reader(input_file);
+
+    if(reader) {
+
+        cout << "success";
+        return EXIT_SUCCESS;
+
+    } else {
+        cout << "Error: the input file cannot be opened" << endl;
+        return EXIT_FAILURE;
+    }
+
 }
 

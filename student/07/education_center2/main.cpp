@@ -97,10 +97,15 @@ int main()
             }
 
             if (exists) {
-                //if the theme already exists, just push back the course into its vector
+                //if the course already exists, remove the old info
+                for (int i = 0; i < themes.at(theme).size(); i++) {
+                    if (themes.at(theme).at(i).name == c.name && themes.at(theme).at(i).location == c.location) {
+                        themes.at(theme).erase(themes.at(theme).begin() + i);
+                    }
+                }
                 themes.at(theme).push_back(c);
             } else {
-                //otherwise create the associated vector and insert it into the map
+                //if the theme is new, create the associated vector and insert the pair into the map
                 vector<Course> courses;
                 courses.push_back(c);
                 themes.insert({theme, courses});
@@ -110,13 +115,13 @@ int main()
 
         reader.close();
 
-//        for (auto thing : themes) {
-//            cout << thing.first << ": " << endl;
-//            for (auto thing2 : thing.second) {
-//                cout << thing2.name << ", " << thing2.location << ", " << thing2.enrollments << endl;
-//            }
-//            cout << endl << endl;
-//        }
+        for (auto thing : themes) {
+            cout << thing.first << ": " << endl;
+            for (auto thing2 : thing.second) {
+                cout << thing2.name << ", " << thing2.location << ", " << thing2.enrollments << endl;
+            }
+            cout << endl << endl;
+        }
 
         cout << "Success!";
         return EXIT_SUCCESS;

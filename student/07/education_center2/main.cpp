@@ -47,6 +47,19 @@ std::vector<std::string> split_ignoring_quoted_delim(const std::string& str,
     return result;
 }
 
+void print_themes() {};
+
+void print_courses_in_location_and_theme() {};
+
+void print_available() {};
+
+void print_courses_in_theme() {};
+
+void print_courses_in_location() {};
+
+void print_favorite_theme() {};
+
+void cancel_course() {};
 
 int main()
 {
@@ -115,15 +128,44 @@ int main()
 
         reader.close();
 
-        for (auto thing : themes) {
-            cout << thing.first << ": " << endl;
-            for (auto thing2 : thing.second) {
-                cout << thing2.name << ", " << thing2.location << ", " << thing2.enrollments << endl;
+//        for (auto thing : themes) {
+//            cout << thing.first << ": " << endl;
+//            for (auto thing2 : thing.second) {
+//                cout << thing2.name << ", " << thing2.location << ", " << thing2.enrollments << endl;
+//            }
+//            cout << endl << endl;
+//        }
+
+
+        while(true) {
+
+            cout << "> ";
+
+            string input;
+            getline(cin, input);
+
+            vector<string> parts = split_ignoring_quoted_delim(input, ' ');
+
+            if (parts.at(0) == "quit") {
+                return EXIT_SUCCESS;
+            } else if (parts.at(0) == "themes") {
+                print_themes();
+            } else if (parts.at(0) == "courses") {
+                print_courses_in_location_and_theme();
+            } else if (parts.at(0) == "available") {
+                print_available();
+            } else if (parts.at(0) == "courses_in_theme") {
+                print_courses_in_theme();
+            } else if (parts.at(0) == "courses_in_location") {
+                print_courses_in_location();
+            } else if (parts.at(0) == "favorite_theme") {
+                print_favorite_theme();
+            } else if (parts.at(0) == "cancel") {
+                cancel_course();
             }
-            cout << endl << endl;
+
         }
 
-        cout << "Success!";
         return EXIT_SUCCESS;
 
     } else {

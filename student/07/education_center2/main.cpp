@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
@@ -47,19 +48,39 @@ std::vector<std::string> split_ignoring_quoted_delim(const std::string& str,
     return result;
 }
 
-void print_themes() {};
+struct Course {
+    string name;
+    string location;
+    int enrollments;
+};
 
-void print_courses_in_location_and_theme() {};
+void print_themes(const map<string, vector<Course>>& themes) {
 
-void print_available() {};
+    vector<string> theme_names;
 
-void print_courses_in_theme() {};
+    for (auto theme : themes) {
+        theme_names.push_back(theme.first);
+    }
 
-void print_courses_in_location() {};
+    sort(theme_names.begin(), theme_names.end());
 
-void print_favorite_theme() {};
+    for (auto s : theme_names) {
+        cout << s << endl;
+    }
 
-void cancel_course() {};
+}
+
+void print_courses_in_location_and_theme() {}
+
+void print_available() {}
+
+void print_courses_in_theme() {}
+
+void print_courses_in_location() {}
+
+void print_favorite_theme() {}
+
+void cancel_course() {}
 
 int main()
 {
@@ -76,11 +97,6 @@ int main()
         //map<struct>
         //top-level keys are strings (theme names) and values are vectors containing structs (courses)
 
-        struct Course {
-            string name;
-            string location;
-            int enrollments;
-        };
 
         map<string, vector<Course>> themes;
 
@@ -149,7 +165,7 @@ int main()
             if (parts.at(0) == "quit") {
                 return EXIT_SUCCESS;
             } else if (parts.at(0) == "themes") {
-                print_themes();
+                print_themes(themes);
             } else if (parts.at(0) == "courses") {
                 print_courses_in_location_and_theme();
             } else if (parts.at(0) == "available") {

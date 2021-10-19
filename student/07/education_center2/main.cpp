@@ -178,7 +178,49 @@ void print_courses_in_location(const map<string, vector<Course>>& themes, string
 
 }
 
-void print_favorite_theme() {}
+void print_favorite_theme(const map<string, vector<Course>>& themes) {
+
+    int most_enrollments = 0;
+
+    for (auto theme : themes) {
+        int enrollments_in_theme = 0;
+        for (auto course : theme.second) {
+            if (course.enrollments == -1) {
+                enrollments_in_theme = enrollments_in_theme + 50;
+            } else {
+                enrollments_in_theme = enrollments_in_theme + course.enrollments;
+            }
+        }
+        if (enrollments_in_theme > most_enrollments) {
+            most_enrollments = enrollments_in_theme;
+        }
+    }
+
+    vector<string> most_popular_themes;
+
+    for (auto theme : themes) {
+        int enrollments_in_theme = 0;
+        for (auto course : theme.second) {
+            if (course.enrollments == -1) {
+                enrollments_in_theme = enrollments_in_theme + 50;
+            } else {
+                enrollments_in_theme = enrollments_in_theme + course.enrollments;
+            }
+        }
+        if (enrollments_in_theme == most_enrollments) {
+            most_popular_themes.push_back(theme.first);
+        }
+    }
+
+    sort(most_popular_themes.begin(), most_popular_themes.end());
+
+    cout << most_enrollments << " enrollments in themes" << endl;
+
+    for (string s : most_popular_themes) {
+        cout << "--- " << s << endl;
+    }
+
+}
 
 void cancel_course() {}
 
@@ -273,7 +315,7 @@ int main()
             } else if (parts.at(0) == "courses_in_location") {
                 print_courses_in_location(themes, parts.at(1));
             } else if (parts.at(0) == "favorite_theme") {
-                print_favorite_theme();
+                print_favorite_theme(themes);
             } else if (parts.at(0) == "cancel") {
                 cancel_course();
             }

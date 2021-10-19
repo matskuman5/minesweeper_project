@@ -98,7 +98,43 @@ void print_courses_in_location_and_theme(const map<string, vector<Course>>& them
 
 }
 
-void print_available() {}
+void print_available(const map<string, vector<Course>>& themes) {
+
+    struct Line {
+        string theme;
+        string location;
+        string course;
+    };
+
+    vector<Line> lines;
+
+    for (auto theme : themes) {
+        for (auto course : theme.second) {
+            if (course.enrollments != -1) {
+                Line l;
+                l.theme = theme.first;
+                l.location = course.location;
+                l.course = course.name;
+                lines.push_back(l);
+            }
+        }
+    }
+
+    sort(lines.begin(), lines.end(), [](Line a, Line b) {
+        if (a.theme == b.theme) {
+            if (a.location == b.location) {
+                return a.course < b.course;
+            }
+            return a.location < b.location;
+        }
+        return a.theme < b.theme;
+    });
+
+    for (Line l : lines) {
+        cout << l.theme << " : " << l.location << " : " << l.course << endl;
+    }
+
+}
 
 void print_courses_in_theme() {}
 
@@ -120,9 +156,7 @@ int main()
     if(reader) {
 
         //basic file structure:
-        //map<struct>
         //top-level keys are strings (theme names) and values are vectors containing structs (courses)
-
 
         map<string, vector<Course>> themes;
 
@@ -195,7 +229,7 @@ int main()
             } else if (parts.at(0) == "courses") {
                 print_courses_in_location_and_theme(themes, parts.at(1), parts.at(2));
             } else if (parts.at(0) == "available") {
-                print_available();
+                print_available(themes);
             } else if (parts.at(0) == "courses_in_theme") {
                 print_courses_in_theme();
             } else if (parts.at(0) == "courses_in_location") {

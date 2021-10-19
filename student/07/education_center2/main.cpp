@@ -136,7 +136,27 @@ void print_available(const map<string, vector<Course>>& themes) {
 
 }
 
-void print_courses_in_theme() {}
+void print_courses_in_theme(const map<string, vector<Course>>& themes, string theme_name) {
+
+    vector<Course> courses;
+
+    for (auto theme: themes) {
+        if (theme.first == theme_name) {
+            for (auto course : theme.second) {
+                courses.push_back(course);
+            }
+        }
+    }
+
+    sort(courses.begin(), courses.end(), [](Course a, Course b) {
+        return a.location < b.location;
+    });
+
+    for (Course c : courses) {
+        cout << c.location << " : " << c.name << endl;
+    }
+
+}
 
 void print_courses_in_location() {}
 
@@ -231,7 +251,7 @@ int main()
             } else if (parts.at(0) == "available") {
                 print_available(themes);
             } else if (parts.at(0) == "courses_in_theme") {
-                print_courses_in_theme();
+                print_courses_in_theme(themes, parts.at(1));
             } else if (parts.at(0) == "courses_in_location") {
                 print_courses_in_location();
             } else if (parts.at(0) == "favorite_theme") {

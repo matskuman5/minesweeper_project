@@ -158,7 +158,25 @@ void print_courses_in_theme(const map<string, vector<Course>>& themes, string th
 
 }
 
-void print_courses_in_location() {}
+void print_courses_in_location(const map<string, vector<Course>>& themes, string location_name) {
+
+    vector<string> course_names;
+
+    for (auto theme : themes) {
+        for (auto course : theme.second) {
+            if (course.location == location_name) {
+                course_names.push_back(course.name);
+            }
+        }
+    }
+
+    sort(course_names.begin(), course_names.end());
+
+    for (string s : course_names) {
+        cout << s << endl;
+    }
+
+}
 
 void print_favorite_theme() {}
 
@@ -253,7 +271,7 @@ int main()
             } else if (parts.at(0) == "courses_in_theme") {
                 print_courses_in_theme(themes, parts.at(1));
             } else if (parts.at(0) == "courses_in_location") {
-                print_courses_in_location();
+                print_courses_in_location(themes, parts.at(1));
             } else if (parts.at(0) == "favorite_theme") {
                 print_favorite_theme();
             } else if (parts.at(0) == "cancel") {

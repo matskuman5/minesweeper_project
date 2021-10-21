@@ -222,7 +222,31 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
 }
 
-void cancel_course() {}
+void cancel_course(map<string, vector<Course>>& themes, string course_name) {
+
+    for (auto theme : themes) {
+        vector<Course> new_theme = theme.second;
+        vector<int> indexes_to_delete;
+        for (int i = 0; i < theme.second.size(); i++) {
+            if (theme.second.at(i).name == course_name) {
+                indexes_to_delete.push_back(i);
+            }
+        }
+
+        if (indexes_to_delete.size() > 0) {
+            for (int i : indexes_to_delete) {
+                new_theme.erase(new_theme.begin() + i);
+            }
+        }
+
+        themes.erase(theme.first);
+        themes.insert({theme.first, new_theme});
+
+    }
+
+    cout << course_name << " cancelled in all locations" << endl;
+
+}
 
 int main()
 {
@@ -236,7 +260,7 @@ int main()
     if(reader) {
 
         //basic file structure:
-        //top-level keys are strings (theme names) and values are vectors containing structs (courses)
+        //keys are strings (theme names) and values are vectors containing structs (courses)
 
         map<string, vector<Course>> themes;
 
@@ -317,7 +341,7 @@ int main()
             } else if (parts.at(0) == "favorite_theme") {
                 print_favorite_theme(themes);
             } else if (parts.at(0) == "cancel") {
-                cancel_course();
+                cancel_course(themes, parts.at(1));
             }
 
         }

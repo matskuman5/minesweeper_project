@@ -327,21 +327,53 @@ int main()
             vector<string> parts = split_ignoring_quoted_delim(input, ' ');
 
             if (parts.at(0) == "quit") {
-                return EXIT_SUCCESS;
+                if (parts.size() > 1) {
+                    cout << "Error: error in command " << parts.at(0) << endl;
+                } else {
+                    return EXIT_SUCCESS;
+                }
             } else if (parts.at(0) == "themes") {
-                print_themes(themes);
+                if (parts.size() > 1) {
+                    cout << "Error: error in command " << parts.at(0) << endl;
+                } else {
+                    print_themes(themes);
+                }
             } else if (parts.at(0) == "courses") {
-                print_courses_in_location_and_theme(themes, parts.at(1), parts.at(2));
+                if (parts.size() != 3) {
+                    cout << "Error: error in command " << parts.at(0) << endl;
+                } else {
+                    print_courses_in_location_and_theme(themes, parts.at(1), parts.at(2));
+                }
             } else if (parts.at(0) == "available") {
-                print_available(themes);
+                if (parts.size() > 1) {
+                    cout << "Error: error in command " << parts.at(0) << endl;
+                } else {
+                    print_available(themes);
+                }
             } else if (parts.at(0) == "courses_in_theme") {
-                print_courses_in_theme(themes, parts.at(1));
+                if (parts.size() != 2) {
+                    cout << "Error: error in command " << parts.at(0) << endl;
+                } else {
+                    print_courses_in_theme(themes, parts.at(1));
+                }
             } else if (parts.at(0) == "courses_in_location") {
-                print_courses_in_location(themes, parts.at(1));
+                if (parts.size() != 2) {
+                    cout << "Error: error in command " << parts.at(0) << endl;
+                } else {
+                    print_courses_in_location(themes, parts.at(1));
+                }
             } else if (parts.at(0) == "favorite_theme") {
-                print_favorite_theme(themes);
+                if (parts.size() > 1) {
+                    cout << "Error: error in command " << parts.at(0) << endl;
+                } else {
+                    print_favorite_theme(themes);
+                }
             } else if (parts.at(0) == "cancel") {
-                cancel_course(themes, parts.at(1));
+                if (parts.size() != 2) {
+                    cout << "Error: error in command " << parts.at(0) << endl;
+                } else {
+                    cancel_course(themes, parts.at(1));
+                }
             } else {
                 cout << "Error: Unknown command: " << parts.at(0) << endl;
             }

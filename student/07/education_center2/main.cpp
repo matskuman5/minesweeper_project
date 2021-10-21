@@ -342,6 +342,8 @@ int main()
                 print_favorite_theme(themes);
             } else if (parts.at(0) == "cancel") {
                 cancel_course(themes, parts.at(1));
+            } else {
+                cout << "Error: Unknown command: " << parts.at(0) << endl;
             }
 
         }

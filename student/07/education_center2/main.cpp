@@ -265,8 +265,10 @@ void cancel_course(map<string, vector<Course>>& themes, const string course_name
         }
 
         if (indexes_to_delete.size() > 0) {
+            int deleted_indexes = 0;
             for (int i : indexes_to_delete) {
-                new_theme.erase(new_theme.begin() + i);
+                new_theme.erase(new_theme.begin() + i - deleted_indexes);
+                deleted_indexes++;
             }
         }
 

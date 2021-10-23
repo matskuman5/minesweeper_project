@@ -58,13 +58,13 @@ void print_themes(const map<string, vector<Course>>& themes) {
 
     vector<string> theme_names;
 
-    for (auto theme : themes) {
+    for (auto& theme : themes) {
         theme_names.push_back(theme.first);
     }
 
     sort(theme_names.begin(), theme_names.end());
 
-    for (auto s : theme_names) {
+    for (auto& s : theme_names) {
         cout << s << endl;
     }
 
@@ -76,10 +76,10 @@ void print_courses_in_location_and_theme(const map<string, vector<Course>>& them
     bool location_found = false;
     bool theme_found = false;
 
-    for (auto theme: themes) {
+    for (auto& theme: themes) {
         if (theme.first == theme_name) {
             theme_found = true;
-            for (auto course : theme.second) {
+            for (auto& course : theme.second) {
                 if (course.location == location) {
                     location_found = true;
                     courses.push_back(course);
@@ -102,7 +102,7 @@ void print_courses_in_location_and_theme(const map<string, vector<Course>>& them
         return a.name < b.name;
     });
 
-    for (auto course : courses) {
+    for (auto& course : courses) {
         if (course.enrollments == -1) {
             cout << course.name << " --- full" << endl;
         } else {
@@ -122,8 +122,8 @@ void print_available(const map<string, vector<Course>>& themes) {
 
     vector<Line> lines;
 
-    for (auto theme : themes) {
-        for (auto course : theme.second) {
+    for (auto& theme : themes) {
+        for (auto& course : theme.second) {
             if (course.enrollments != -1) {
                 Line l;
                 l.theme = theme.first;
@@ -144,7 +144,7 @@ void print_available(const map<string, vector<Course>>& themes) {
         return a.theme < b.theme;
     });
 
-    for (Line l : lines) {
+    for (Line& l : lines) {
         cout << l.theme << " : " << l.location << " : " << l.course << endl;
     }
 
@@ -155,10 +155,10 @@ void print_courses_in_theme(const map<string, vector<Course>>& themes, string th
     vector<Course> courses;
     bool theme_found = false;
 
-    for (auto theme: themes) {
+    for (auto& theme: themes) {
         if (theme.first == theme_name) {
             theme_found = true;
-            for (auto course : theme.second) {
+            for (auto& course : theme.second) {
                 courses.push_back(course);
             }
         }
@@ -173,7 +173,7 @@ void print_courses_in_theme(const map<string, vector<Course>>& themes, string th
         return a.location < b.location;
     });
 
-    for (Course c : courses) {
+    for (Course& c : courses) {
         cout << c.location << " : " << c.name << endl;
     }
 
@@ -184,8 +184,8 @@ void print_courses_in_location(const map<string, vector<Course>>& themes, string
     vector<string> course_names;
     bool location_found = false;
 
-    for (auto theme : themes) {
-        for (auto course : theme.second) {
+    for (auto& theme : themes) {
+        for (auto &course : theme.second) {
             if (course.location == location_name) {
                 location_found = true;
                 course_names.push_back(course.name);
@@ -200,7 +200,7 @@ void print_courses_in_location(const map<string, vector<Course>>& themes, string
 
     sort(course_names.begin(), course_names.end());
 
-    for (string s : course_names) {
+    for (string& s : course_names) {
         cout << s << endl;
     }
 
@@ -210,9 +210,9 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
     int most_enrollments = 0;
 
-    for (auto theme : themes) {
+    for (auto& theme : themes) {
         int enrollments_in_theme = 0;
-        for (auto course : theme.second) {
+        for (auto& course : theme.second) {
             if (course.enrollments == -1) {
                 enrollments_in_theme = enrollments_in_theme + 50;
             } else {
@@ -226,9 +226,9 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
     vector<string> most_popular_themes;
 
-    for (auto theme : themes) {
+    for (auto& theme : themes) {
         int enrollments_in_theme = 0;
-        for (auto course : theme.second) {
+        for (auto& course : theme.second) {
             if (course.enrollments == -1) {
                 enrollments_in_theme = enrollments_in_theme + 50;
             } else {
@@ -244,7 +244,7 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
     cout << most_enrollments << " enrollments in themes" << endl;
 
-    for (string s : most_popular_themes) {
+    for (string& s : most_popular_themes) {
         cout << "--- " << s << endl;
     }
 
@@ -254,7 +254,7 @@ void cancel_course(map<string, vector<Course>>& themes, string course_name) {
 
     bool course_found = false;
 
-    for (auto theme : themes) {
+    for (auto& theme : themes) {
         vector<Course> new_theme = theme.second;
         vector<int> indexes_to_delete;
         for (int i = 0; i < theme.second.size(); i++) {
@@ -313,7 +313,7 @@ bool read_file_and_store_data(map<string, vector<Course>>& themes) {
             }
 
             bool exists = false;
-            for (auto thing : themes) {
+            for (auto& thing : themes) {
                 if (thing.first == theme) {
                     exists = true;
                     break;

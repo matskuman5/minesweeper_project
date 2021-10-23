@@ -150,7 +150,7 @@ void print_available(const map<string, vector<Course>>& themes) {
 
 }
 
-void print_courses_in_theme(const map<string, vector<Course>>& themes, string theme_name) {
+void print_courses_in_theme(const map<string, vector<Course>>& themes, const string theme_name) {
 
     vector<Course> courses;
     bool theme_found = false;
@@ -179,7 +179,7 @@ void print_courses_in_theme(const map<string, vector<Course>>& themes, string th
 
 }
 
-void print_courses_in_location(const map<string, vector<Course>>& themes, string location_name) {
+void print_courses_in_location(const map<string, vector<Course>>& themes, const string location_name) {
 
     vector<string> course_names;
     bool location_found = false;
@@ -250,7 +250,7 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
 }
 
-void cancel_course(map<string, vector<Course>>& themes, string course_name) {
+void cancel_course(map<string, vector<Course>>& themes, const string course_name) {
 
     bool course_found = false;
 
@@ -347,7 +347,7 @@ bool read_file_and_store_data(map<string, vector<Course>>& themes) {
 
 }
 
-bool process_input(map<string, vector<Course>>& themes, string input) {
+bool process_input(map<string, vector<Course>>& themes, const string input) {
 
     vector<string> parts = split_ignoring_quoted_delim(input, ' ');
 

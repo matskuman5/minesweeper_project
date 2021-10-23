@@ -284,6 +284,49 @@ void cancel_course(map<string, vector<Course>>& themes, string course_name) {
 
 }
 
+bool process_input(map<string, vector<Course>>& themes, string input) {
+
+    vector<string> parts = split_ignoring_quoted_delim(input, ' ');
+
+    vector<string> accepted_commands = {"quit",
+                                       "themes",
+                                       "courses",
+                                       "available",
+                                       "courses_in_theme",
+                                       "courses_in_location",
+                                       "favorite_theme",
+                                       "cancel"};
+
+    if (find(accepted_commands.begin(), accepted_commands.end(), parts.at(0)) != accepted_commands.end()) {
+
+        if (parts.at(0) == "quit" && parts.size() == 1) {
+            return true;
+        } else if (parts.at(0) == "themes" && parts.size() == 1) {
+            print_themes(themes);
+        } else if (parts.at(0) == "courses" && parts.size() == 3) {
+            print_courses_in_location_and_theme(themes, parts.at(1), parts.at(2));
+        } else if (parts.at(0) == "available" && parts.size() == 1) {
+            print_available(themes);
+        } else if (parts.at(0) == "courses_in_theme" && parts.size() == 2) {
+            print_courses_in_theme(themes, parts.at(1));
+        } else if (parts.at(0) == "courses_in_location" && parts.size() == 2) {
+            print_courses_in_location(themes, parts.at(1));
+        } else if (parts.at(0) == "favorite_theme" && parts.size() == 1) {
+            print_favorite_theme(themes);
+        } else if (parts.at(0) == "cancel" && parts.size() == 2) {
+            cancel_course(themes, parts.at(1));
+        } else {
+            cout << "Error: error in command " << parts.at(0) << endl;
+        }
+
+    } else {
+        cout << "Error: Unknown command: " << parts.at(0) << endl;
+    }
+
+    return false;
+
+}
+
 int main()
 {
 
@@ -360,58 +403,8 @@ int main()
             string input;
             getline(cin, input);
 
-            vector<string> parts = split_ignoring_quoted_delim(input, ' ');
-
-            if (parts.at(0) == "quit") {
-                if (parts.size() > 1) {
-                    cout << "Error: error in command " << parts.at(0) << endl;
-                } else {
-                    return EXIT_SUCCESS;
-                }
-            } else if (parts.at(0) == "themes") {
-                if (parts.size() > 1) {
-                    cout << "Error: error in command " << parts.at(0) << endl;
-                } else {
-                    print_themes(themes);
-                }
-            } else if (parts.at(0) == "courses") {
-                if (parts.size() != 3) {
-                    cout << "Error: error in command " << parts.at(0) << endl;
-                } else {
-                    print_courses_in_location_and_theme(themes, parts.at(1), parts.at(2));
-                }
-            } else if (parts.at(0) == "available") {
-                if (parts.size() > 1) {
-                    cout << "Error: error in command " << parts.at(0) << endl;
-                } else {
-                    print_available(themes);
-                }
-            } else if (parts.at(0) == "courses_in_theme") {
-                if (parts.size() != 2) {
-                    cout << "Error: error in command " << parts.at(0) << endl;
-                } else {
-                    print_courses_in_theme(themes, parts.at(1));
-                }
-            } else if (parts.at(0) == "courses_in_location") {
-                if (parts.size() != 2) {
-                    cout << "Error: error in command " << parts.at(0) << endl;
-                } else {
-                    print_courses_in_location(themes, parts.at(1));
-                }
-            } else if (parts.at(0) == "favorite_theme") {
-                if (parts.size() > 1) {
-                    cout << "Error: error in command " << parts.at(0) << endl;
-                } else {
-                    print_favorite_theme(themes);
-                }
-            } else if (parts.at(0) == "cancel") {
-                if (parts.size() != 2) {
-                    cout << "Error: error in command " << parts.at(0) << endl;
-                } else {
-                    cancel_course(themes, parts.at(1));
-                }
-            } else {
-                cout << "Error: Unknown command: " << parts.at(0) << endl;
+            if (process_input(themes, input)) {
+                return EXIT_SUCCESS;
             }
 
         }

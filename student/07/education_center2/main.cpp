@@ -257,7 +257,7 @@ void cancel_course(map<string, vector<Course>>& themes, const string course_name
     for (auto& theme : themes) {
         vector<Course> new_theme = theme.second;
         vector<int> indexes_to_delete;
-        for (int i = 0; i < theme.second.size(); i++) {
+        for (unsigned long int i = 0; i < theme.second.size(); i++) {
             if (theme.second.at(i).name == course_name) {
                 course_found = true;
                 indexes_to_delete.push_back(i);
@@ -322,7 +322,7 @@ bool read_file_and_store_data(map<string, vector<Course>>& themes) {
 
             if (exists) {
                 //if the course already exists, remove the old info
-                for (int i = 0; i < themes.at(theme).size(); i++) {
+                for (unsigned long int i = 0; i < themes.at(theme).size(); i++) {
                     if (themes.at(theme).at(i).name == c.name && themes.at(theme).at(i).location == c.location) {
                         themes.at(theme).erase(themes.at(theme).begin() + i);
                     }

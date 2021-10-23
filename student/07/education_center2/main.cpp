@@ -284,6 +284,69 @@ void cancel_course(map<string, vector<Course>>& themes, string course_name) {
 
 }
 
+bool read_file_and_store_data(map<string, vector<Course>>& themes) {
+
+    cout << "Input file: ";
+    string input_file;
+    getline(cin, input_file);
+
+    ifstream reader(input_file);
+
+    if(reader) {
+
+        string line;
+
+        //basic file structure:
+        //keys are strings (theme names) and values are vectors containing structs (courses)
+
+        while(getline(reader, line)) {
+
+            vector<string> parts = split_ignoring_quoted_delim(line, ';');
+            Course c;
+            string theme = parts.at(0);
+            c.name = parts.at(1);
+            c.location = parts.at(2);
+            if (parts.at(3) == "full") {
+                c.enrollments = -1;
+            } else {
+                c.enrollments = stoi(parts.at(3));
+            }
+
+            bool exists = false;
+            for (auto thing : themes) {
+                if (thing.first == theme) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (exists) {
+                //if the course already exists, remove the old info
+                for (int i = 0; i < themes.at(theme).size(); i++) {
+                    if (themes.at(theme).at(i).name == c.name && themes.at(theme).at(i).location == c.location) {
+                        themes.at(theme).erase(themes.at(theme).begin() + i);
+                    }
+                }
+                themes.at(theme).push_back(c);
+            } else {
+                //if the theme is new, create the associated vector and insert the pair into the map
+                vector<Course> courses;
+                courses.push_back(c);
+                themes.insert({theme, courses});
+            }
+
+        }
+
+        reader.close();
+        return true;
+
+    } else {
+        cout << "Error: the input file cannot be opened" << endl;
+        return false;
+    }
+
+}
+
 bool process_input(map<string, vector<Course>>& themes, string input) {
 
     vector<string> parts = split_ignoring_quoted_delim(input, ' ');
@@ -327,74 +390,11 @@ bool process_input(map<string, vector<Course>>& themes, string input) {
 
 }
 
-int main()
-{
+int main() {
 
-    cout << "Input file: ";
-    string input_file;
-    getline(cin, input_file);
+    map<string, vector<Course>> themes;
 
-    ifstream reader(input_file);
-
-    if(reader) {
-
-        //basic file structure:
-        //keys are strings (theme names) and values are vectors containing structs (courses)
-
-        map<string, vector<Course>> themes;
-
-        string line;
-
-        while(getline(reader, line)) {
-
-            vector<string> parts = split_ignoring_quoted_delim(line, ';');
-            Course c;
-            string theme = parts.at(0);
-            c.name = parts.at(1);
-            c.location = parts.at(2);
-            if (parts.at(3) == "full") {
-                c.enrollments = -1;
-            } else {
-                c.enrollments = stoi(parts.at(3));
-            }
-
-
-
-            bool exists = false;
-            for (auto thing : themes) {
-                if (thing.first == theme) {
-                    exists = true;
-                    break;
-                }
-            }
-
-            if (exists) {
-                //if the course already exists, remove the old info
-                for (int i = 0; i < themes.at(theme).size(); i++) {
-                    if (themes.at(theme).at(i).name == c.name && themes.at(theme).at(i).location == c.location) {
-                        themes.at(theme).erase(themes.at(theme).begin() + i);
-                    }
-                }
-                themes.at(theme).push_back(c);
-            } else {
-                //if the theme is new, create the associated vector and insert the pair into the map
-                vector<Course> courses;
-                courses.push_back(c);
-                themes.insert({theme, courses});
-            }
-
-        }
-
-        reader.close();
-
-//        for (auto thing : themes) {
-//            cout << thing.first << ": " << endl;
-//            for (auto thing2 : thing.second) {
-//                cout << thing2.name << ", " << thing2.location << ", " << thing2.enrollments << endl;
-//            }
-//            cout << endl << endl;
-//        }
-
+    if (read_file_and_store_data(themes)) {
 
         while(true) {
 
@@ -406,13 +406,9 @@ int main()
             if (process_input(themes, input)) {
                 return EXIT_SUCCESS;
             }
-
         }
 
-        return EXIT_SUCCESS;
-
     } else {
-        cout << "Error: the input file cannot be opened" << endl;
         return EXIT_FAILURE;
     }
 

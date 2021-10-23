@@ -252,11 +252,14 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
 void cancel_course(map<string, vector<Course>>& themes, string course_name) {
 
+    bool course_found = false;
+
     for (auto theme : themes) {
         vector<Course> new_theme = theme.second;
         vector<int> indexes_to_delete;
         for (int i = 0; i < theme.second.size(); i++) {
             if (theme.second.at(i).name == course_name) {
+                course_found = true;
                 indexes_to_delete.push_back(i);
             }
         }
@@ -270,6 +273,11 @@ void cancel_course(map<string, vector<Course>>& themes, string course_name) {
         themes.erase(theme.first);
         themes.insert({theme.first, new_theme});
 
+    }
+
+    if (!course_found) {
+        cout << "Error: unknown course" << endl;
+        return;
     }
 
     cout << course_name << " cancelled in all locations" << endl;

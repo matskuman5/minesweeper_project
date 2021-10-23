@@ -308,6 +308,19 @@ bool read_file_and_store_data(map<string, vector<Course>>& themes) {
         while(getline(reader, line)) {
 
             vector<string> parts = split_ignoring_quoted_delim(line, ';');
+
+            if (parts.size() != 4) {
+                cout << "Error: empty field" << endl;
+                return false;
+            }
+
+            for (const string& s : parts) {
+                if (s == "") {
+                    cout << "Error: empty field" << endl;
+                    return false;
+                }
+            }
+
             Course c;
             string theme = parts.at(0);
             c.name = parts.at(1);

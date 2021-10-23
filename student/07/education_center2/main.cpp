@@ -14,7 +14,8 @@
 //Implementation details:
 //The program is contained entirely in main.cpp. All major functionality is handled by separate functions.
 //The main() function initializes the data structure: an std::map that maps theme names (as std::string) to
-//vectors containing courses (as structs). The main() function also contains the while(true) loop that handles input.
+//vectors containing courses (as structs). A course with full enrollment is represented by an enrollment amount of -1.
+//The main() function also contains a while(true) loop that handles input.
 //Each function is commented to explain details of its function and implementation.
 //
 //Code author:
@@ -31,6 +32,8 @@
 #include <algorithm>
 
 using namespace std;
+
+const unsigned int FULL_ENROLLMENTS = 50;
 
 // Jakaa annetun merkkijonon str annetun merkin delimiter erottelemiin osiin
 // ja palauttaa osat vektorissa.
@@ -243,7 +246,7 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
         int enrollments_in_theme = 0;
         for (auto& course : theme.second) {
             if (course.enrollments == -1) {
-                enrollments_in_theme = enrollments_in_theme + 50;
+                enrollments_in_theme = enrollments_in_theme + FULL_ENROLLMENTS;
             } else {
                 enrollments_in_theme = enrollments_in_theme + course.enrollments;
             }

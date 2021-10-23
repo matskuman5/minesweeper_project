@@ -74,6 +74,7 @@ struct Course {
     int enrollments;
 };
 
+//prints all themes in alphabetical order
 void print_themes(const map<string, vector<Course>>& themes) {
 
     vector<string> theme_names;
@@ -90,6 +91,8 @@ void print_themes(const map<string, vector<Course>>& themes) {
 
 }
 
+//prints all courses and their enrollments with the specified location and theme in alphabetical order
+//prints error messages if either the location or theme cannot be found
 void print_courses_in_location_and_theme(const map<string, vector<Course>>& themes, const string location, const string theme_name) {
 
     vector<Course> courses;
@@ -132,6 +135,7 @@ void print_courses_in_location_and_theme(const map<string, vector<Course>>& them
 
 }
 
+//prints all courses that are not full (i.e. enrollments != -1)
 void print_available(const map<string, vector<Course>>& themes) {
 
     struct Line {
@@ -170,6 +174,8 @@ void print_available(const map<string, vector<Course>>& themes) {
 
 }
 
+//prints all courses with the specified theme in alphabetical order by their location
+//prints an error message if the theme cannot be found
 void print_courses_in_theme(const map<string, vector<Course>>& themes, const string theme_name) {
 
     vector<Course> courses;
@@ -199,6 +205,8 @@ void print_courses_in_theme(const map<string, vector<Course>>& themes, const str
 
 }
 
+//prints all courses with the specified location in alphabetical order
+//prints an error message if the location cannot be found
 void print_courses_in_location(const map<string, vector<Course>>& themes, const string location_name) {
 
     vector<string> course_names;
@@ -226,6 +234,7 @@ void print_courses_in_location(const map<string, vector<Course>>& themes, const 
 
 }
 
+//prints the course(s) with the most enrollments
 void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
     int most_enrollments = 0;
@@ -274,6 +283,8 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
 }
 
+//cancels all courses with the specified name, deleting them from the data structure
+//prints an error message if the courses cannot be found
 void cancel_course(map<string, vector<Course>>& themes, const string course_name) {
 
     bool course_found = false;
@@ -310,6 +321,10 @@ void cancel_course(map<string, vector<Course>>& themes, const string course_name
 
 }
 
+//first asks the user to provide the name of the input file
+//then reads the file line-by-line, splitting it by semicolons and adding the courses to the data structure
+//prints error messages if the file doesn't contain 4 fields per line, if it contains empty fields, or if the input file cannot be read
+//returns whether or not the operation was successful
 bool read_file_and_store_data(map<string, vector<Course>>& themes) {
 
     cout << "Input file: ";
@@ -386,6 +401,9 @@ bool read_file_and_store_data(map<string, vector<Course>>& themes) {
 
 }
 
+//runs the command that the given input string refers to
+//prints error messages if the command is unknown or if the input contains the wrong amount of arguments
+//returns whether or not the quit command was run (i.e. whether or not the program should end)
 bool process_input(map<string, vector<Course>>& themes, const string input) {
 
     vector<string> parts = split_ignoring_quoted_delim(input, ' ');

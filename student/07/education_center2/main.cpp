@@ -153,13 +153,20 @@ void print_available(const map<string, vector<Course>>& themes) {
 void print_courses_in_theme(const map<string, vector<Course>>& themes, string theme_name) {
 
     vector<Course> courses;
+    bool theme_found = false;
 
     for (auto theme: themes) {
         if (theme.first == theme_name) {
+            theme_found = true;
             for (auto course : theme.second) {
                 courses.push_back(course);
             }
         }
+    }
+
+    if (!theme_found) {
+        cout << "Error: unknown theme" << endl;
+        return;
     }
 
     sort(courses.begin(), courses.end(), [](Course a, Course b) {

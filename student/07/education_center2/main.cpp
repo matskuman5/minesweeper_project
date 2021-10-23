@@ -242,7 +242,11 @@ void print_favorite_theme(const map<string, vector<Course>>& themes) {
 
     sort(most_popular_themes.begin(), most_popular_themes.end());
 
-    cout << most_enrollments << " enrollments in themes" << endl;
+    if (most_enrollments == 0) {
+        cout << "No enrollments" << endl;
+    } else {
+        cout << most_enrollments << " enrollments in themes" << endl;
+    }
 
     for (string& s : most_popular_themes) {
         cout << "--- " << s << endl;

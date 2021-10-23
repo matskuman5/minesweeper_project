@@ -3,6 +3,26 @@
 //  Copyright © 2021
 //--------------------------------------------------
 
+//Education Centre
+//
+//This program reads an input file containing information about courses,
+//stores that information in a data structure, and enables the user to
+//print information about the courses as well as cancel courses through the console.
+//Courses are grouped into themes and contain information about
+//their enrollments, their location and their name.
+//
+//Implementation details:
+//The program is contained entirely in main.cpp. All major functionality is handled by separate functions.
+//The main() function initializes the data structure: an std::map that maps theme names (as std::string) to
+//vectors containing courses (as structs). The main() function also contains the while(true) loop that handles input.
+//Each function is commented to explain details of its function and implementation.
+//
+//Code author:
+//Name: Matias Selin
+//Student Number: 150181798
+//Username: vxmase
+//E-Mail: matias.selin@tuni.fi
+
 #include <vector>
 #include <string>
 #include <iostream>

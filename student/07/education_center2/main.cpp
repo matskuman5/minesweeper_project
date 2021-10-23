@@ -182,13 +182,20 @@ void print_courses_in_theme(const map<string, vector<Course>>& themes, string th
 void print_courses_in_location(const map<string, vector<Course>>& themes, string location_name) {
 
     vector<string> course_names;
+    bool location_found = false;
 
     for (auto theme : themes) {
         for (auto course : theme.second) {
             if (course.location == location_name) {
+                location_found = true;
                 course_names.push_back(course.name);
             }
         }
+    }
+
+    if (!location_found) {
+        cout << "Error: unknown location" << endl;
+        return;
     }
 
     sort(course_names.begin(), course_names.end());

@@ -148,6 +148,8 @@ void change_phone_number(std::string number, std::string file_name, std::map< st
 
     write_change_to_file(file_name, user_ids);
 
+    std::cout << std::endl;
+
 }
 
 

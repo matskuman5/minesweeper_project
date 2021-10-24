@@ -81,7 +81,8 @@ bool is_valid_phone_number(const std::string number) {
         if(!(('0' <= number[i] and number[i] <= '9')
              or number[i] == ' '
              or number[i] == '-')) {
-            std::cout << "Erroneous phone number: "
+            std::cout << std::endl
+                      << "Erroneous phone number: "
                       << number
                       << std::endl << std::endl;
             return false;
@@ -128,8 +129,6 @@ void change_phone_number(std::string number, std::string file_name, std::map< st
     std::cout << "Enter a new phone number: ";
     std::string new_number;
     getline(std::cin, new_number);
-
-    std::cout << std::endl;
 
     if (!is_valid_phone_number(new_number)) {
         return;

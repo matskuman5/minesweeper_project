@@ -129,6 +129,8 @@ void change_phone_number(std::string number, std::string file_name, std::map< st
     std::string new_number;
     getline(std::cin, new_number);
 
+    std::cout << std::endl;
+
     if (!is_valid_phone_number(new_number)) {
         return;
     }

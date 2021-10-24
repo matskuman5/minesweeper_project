@@ -130,7 +130,7 @@ void change_phone_number(std::string number, std::string file_name, std::map< st
     getline(std::cin, new_number);
 
     for (char c : new_number) {
-        if (!isdigit(c)) {
+        if (!is_valid_phone_number(new_number)) {
             std::cout << "Erroneous phone number: " << new_number << std::endl;
             return;
         }

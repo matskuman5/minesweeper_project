@@ -101,7 +101,7 @@ void write_change_to_file(std::string file_name, std::map< std::string, Student*
                 pair.second->name + ";" +
                 pair.second->phone_number + ";" +
                 pair.second->email + ";" +
-                pair.second->skype;
+                pair.second->skype + "\n";
 
         printer << line_to_write;
     }

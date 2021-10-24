@@ -121,7 +121,6 @@ void change_phone_number(std::string number, std::string file_name, std::map< st
     }
 
     if (!number_found) {
-        std::cout << "There is no student with the given number!" << std::endl;
         return;
     }
 
@@ -130,7 +129,7 @@ void change_phone_number(std::string number, std::string file_name, std::map< st
     getline(std::cin, new_number);
 
     if (!is_valid_phone_number(new_number)) {
-        std::cout << "Erroneous phone number: " << new_number << std::endl;
+        std::cout << std::endl << "Erroneous phone number: " << new_number << std::endl;
         return;
     }
 

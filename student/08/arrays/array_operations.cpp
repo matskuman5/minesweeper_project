@@ -10,7 +10,7 @@
 int greatest_v1(int *itemptr, int size)
 {
 
-    int greatest_element = 0;
+    int greatest_element = *itemptr;
 
     for(int* position = itemptr; position < itemptr + size; ++position){
         if (greatest_element < *position) {

@@ -105,7 +105,7 @@ int main()
 //            std::cout << integer_input << " stored at " << pointer << std::endl << std::endl;
             continue;
         } else {
-            std::cout << "Error: unknown character" << std::endl;
+            std::cout << "Error: Unknown character" << std::endl;
             return EXIT_FAILURE;
         }
         --pointer;
@@ -113,12 +113,12 @@ int main()
     }
 
     if (pointer > array) {
-        std::cout << "Error: too few operators" << std::endl;
+        std::cout << "Error: Too few operators" << std::endl;
         return EXIT_FAILURE;
     }
 
     if (pointer < array) {
-        std::cout << "Error: too few operands" << std::endl;
+        std::cout << "Error: Too few operands" << std::endl;
         return EXIT_FAILURE;
     }
 

@@ -30,7 +30,7 @@ int greatest_v1(int *itemptr, int size)
 int greatest_v2(int *itemptr, int *endptr)
 {
 
-    int greatest_element = 0;
+    int greatest_element = *itemptr;
 
     for(int* position = itemptr; position < endptr; ++position){
         if (greatest_element < *position) {

@@ -5,7 +5,7 @@ int main()
 {
 
     std::cout << "Input an expression in reverse Polish notation (end with #):" << std::endl;
-    std::cout << "EXPR>";
+    std::cout << "EXPR> ";
 
     char char_array[80];
 

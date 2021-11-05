@@ -111,7 +111,7 @@ bool Cards::top_to_bottom() {
 
 void Cards::print_from_bottom_to_top(std::ostream &s)
 {
-
+    s << "helo";
 }
 
 Cards::~Cards() {
@@ -125,7 +125,8 @@ Cards::~Cards() {
 
 int Cards::recursive_print(Card_data *top, std::ostream &s)
 {
-
+    s << "helo" << top->data;
+    return 0;
 }
 
 bool Cards::is_empty() {

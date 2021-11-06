@@ -54,8 +54,7 @@ void Queue::switch_light() {
         }
         std::cout << "No vehicles waiting in traffic lights" << std::endl;
     } else {
-
-        std::cout << "Vehicle(s) ";
+        std::cout << "GREEN: Vehicle(s) ";
         for (unsigned int i = 0; i < cycle_; i++) {
             dequeue();
         }

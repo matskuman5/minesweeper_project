@@ -126,7 +126,7 @@ int main() {
         }
 
         if (!command_found) {
-            cout << "Error: unknown command" << endl;
+            cout << "Error: unknown command." << endl;
         }
 
     }

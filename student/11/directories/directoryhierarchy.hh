@@ -188,6 +188,8 @@ private:
 
     std::vector<Directory*> directories_;
 
+    void getSubdirectorySizes(Directory *dir, int &du) const;
+
 };
 
 #endif // DIRECTORYHIERARCHY_HH

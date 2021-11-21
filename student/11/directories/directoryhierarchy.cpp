@@ -94,8 +94,27 @@ void DirectoryHierarchy::commandList(std::ostream &output) const {
 
 }
 
-void DirectoryHierarchy::commandDiskUsage(std::ostream &output) const
-{
+/* Description: Prints the disk usage of the current working directory.
+ * Disk usage is counted as the sum of the sizes of the current working
+ * directory and all its subdirectories.
+ * Parameters:
+ *  Param1: Output-stream for printing
+ * Errormessages:
+ *  None.
+ */
+void DirectoryHierarchy::commandDiskUsage(std::ostream &output) const {
+
+    int i = 0;
+
+    int& du = i;
+
+    for (auto d : wd_->subdirectories_) {
+        getSubdirectorySizes(d, du);
+        output << du << " /" << d->id_ << std::endl;
+        du = 0;
+    }
+
+
 
 }
 
@@ -170,6 +189,23 @@ void DirectoryHierarchy::printPath(Directory *dir, std::ostream &output) const {
         output << "/" + dir->id_;
     } else {
         output << "/home/" + dir->id_;
+    }
+
+}
+
+void DirectoryHierarchy::getSubdirectorySizes(Directory *dir, int &du) const {
+
+    //td::cout << "directory: " << dir->id_ << ", size: " << dir->size_ << ", du: " << du << std::endl;
+
+    if (dir->subdirectories_.empty()) {
+        //std::cout << "finished, adding: " << dir->size_ << " to du." << std::endl << std::endl;
+        du += dir->size_;
+    } else {
+        for (Directory *d : dir->subdirectories_) {
+            getSubdirectorySizes(d, du);
+        }
+        //std::cout << "adding top directory: " << dir->size_ << " to du." << std::endl << std::endl;
+        du += dir->size_;
     }
 
 }

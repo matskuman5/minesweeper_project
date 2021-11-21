@@ -23,7 +23,7 @@ DirectoryHierarchy::~DirectoryHierarchy()
  */
 void DirectoryHierarchy::addNewDirectory(const std::string &id, const std::string &timestamp, int size, std::ostream &output) {
 
-    Directory* d = new Directory({id, timestamp, size});
+    Directory *d = new Directory({id, timestamp, size});
 
     directories_.push_back(d);
 
@@ -40,11 +40,11 @@ void DirectoryHierarchy::addNewDirectory(const std::string &id, const std::strin
  */
 void DirectoryHierarchy::addRelation(const std::string &directory, const std::string &parent, std::ostream &output) {
 
-    Directory* d = getPointer(directory);
-    if (d->parent_ == nullptr) {
+    if (parent == EMPTY) {
         return;
     }
 
+    Directory *d = getPointer(directory);
     Directory* p = getPointer(parent);
 
     d->parent_ = p;
@@ -52,8 +52,23 @@ void DirectoryHierarchy::addRelation(const std::string &directory, const std::st
 
 }
 
-void DirectoryHierarchy::commandPrintWorkingDirectory(std::ostream &output) const
-{
+/* Methods implementing commands */
+
+/* Description: Prints the current working directory with its path.
+ * Parameters:
+ *  Param1: Output-stream for printing
+ * Errormessages:
+ *  None.
+ */
+void DirectoryHierarchy::commandPrintWorkingDirectory(std::ostream &output) const {
+
+    if (wd_ == nullptr) {
+        output << "/home";
+    } else {
+        printPath(wd_, output);
+    }
+
+    output << std::endl;
 
 }
 
@@ -67,8 +82,35 @@ void DirectoryHierarchy::commandDiskUsage(std::ostream &output) const
 
 }
 
-void DirectoryHierarchy::commandChangeDirectory(const std::string &id, std::ostream &output)
-{
+/* Description: Changes the working directory to the subdirectory ID,
+ * or home, or to the parent of the current working directory.
+ *  Param1: ID of the directory, or "~", or "..".
+ *  Param2: Output-stream for printing
+ * Errormessages:
+ *  If ID is not a subdirectory of the current working directory,
+ *  prints the error message:
+ *      "Error. <ID> not found."
+ *  If the current working directory is home and if ID is "..",
+ *  prints the error message:
+ *      "Error. Already at the root."
+ */
+void DirectoryHierarchy::commandChangeDirectory(const std::string &id, std::ostream &output) {
+
+    if (id == "~") {
+        wd_ = nullptr;
+    } else if (id == "..") {
+        if (wd_ == nullptr) {
+            output << "Error. Already at the root." << std::endl;
+        } else {
+            wd_ == wd_->parent_;
+        }
+    } else {
+        if (getPointer(id) != nullptr) {
+            wd_ = getPointer(id);
+        } else {
+            output << "Error. " << id << " not found." << std::endl;
+        }
+    }
 
 }
 
@@ -98,6 +140,19 @@ Directory *DirectoryHierarchy::getPointer(const std::string &id) const {
         if (d->id_ == id) {
             return d;
         }
+    }
+
+    return nullptr;
+
+}
+
+void DirectoryHierarchy::printPath(Directory *dir, std::ostream &output) const {
+
+    if (dir->parent_ != nullptr) {
+        printPath(dir->parent_, output);
+        output << "/" + dir->id_;
+    } else {
+        output << "/home";
     }
 
 }

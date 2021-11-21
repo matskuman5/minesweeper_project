@@ -72,8 +72,25 @@ void DirectoryHierarchy::commandPrintWorkingDirectory(std::ostream &output) cons
 
 }
 
-void DirectoryHierarchy::commandList(std::ostream &output) const
-{
+/* Description: Prints the subdirectories of the current working directory.
+ * Parameters:
+ *  Param1: Output-stream for printing
+ * Errormessages:
+ *  None.
+ */
+void DirectoryHierarchy::commandList(std::ostream &output) const {
+
+    if (wd_ == nullptr) {
+        for (auto d : directories_) {
+            if (d->parent_ == nullptr) {
+                output << d->id_ << ", " << d->timestamp_ << ", " << d->size_ << std::endl;
+            }
+        }
+    } else {
+        for (auto d : wd_->subdirectories_) {
+            output << d->id_ << ", " << d->timestamp_ << ", " << d->size_ << std::endl;
+        }
+    }
 
 }
 
@@ -152,7 +169,7 @@ void DirectoryHierarchy::printPath(Directory *dir, std::ostream &output) const {
         printPath(dir->parent_, output);
         output << "/" + dir->id_;
     } else {
-        output << "/home";
+        output << "/home/" + dir->id_;
     }
 
 }

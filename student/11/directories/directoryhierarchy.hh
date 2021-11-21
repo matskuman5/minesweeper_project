@@ -184,7 +184,10 @@ private:
     // Prints the path of the directory.
     void printPath(Directory* dir, std::ostream& output) const;
 
-    // More private methods and attributes
+    Directory* wd_;
+
+    std::vector<Directory*> directories_;
+
 };
 
 #endif // DIRECTORYHIERARCHY_HH

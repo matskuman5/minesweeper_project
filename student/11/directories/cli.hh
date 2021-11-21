@@ -100,7 +100,7 @@ private:
 
     // Constant table that contains the different commands that the CLI can
     // recognize.
-    CommandInfo const COMMANDS[11] = {
+    CommandInfo const COMMANDS[10] = {
         {{"EXIT","QUIT","Q"},nullptr,nullptr,nullptr,nullptr},
         {{"AS_OLD_AS","AOA"},nullptr,&DirectoryHierarchy::commandAsOldAs,nullptr,nullptr},
         {{"GREATEST"},nullptr,&DirectoryHierarchy::commandGreatest,nullptr,nullptr},
@@ -110,7 +110,6 @@ private:
         {{"PRINT_WORKING_DIRECTORY","PWD"},&DirectoryHierarchy::commandPrintWorkingDirectory,nullptr,nullptr,nullptr},
         {{"DISC_USAGE","DU"},&DirectoryHierarchy::commandDiskUsage,nullptr,nullptr,nullptr},
         {{"FIND"},nullptr,nullptr,nullptr,&DirectoryHierarchy::commandFind},
-        {{"LOCATE"},nullptr,&DirectoryHierarchy::commandLocate,nullptr,nullptr},
         {{},nullptr,nullptr,nullptr,nullptr}
     };
 };

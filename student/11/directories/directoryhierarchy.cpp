@@ -148,7 +148,7 @@ void DirectoryHierarchy::commandChangeDirectory(const std::string &id, std::ostr
         if (wd_ == nullptr) {
             output << "Error. Already at the root." << std::endl;
         } else {
-            wd_ == wd_->parent_;
+            wd_ = wd_->parent_;
         }
     } else {
         if (getPointer(id) != nullptr) {

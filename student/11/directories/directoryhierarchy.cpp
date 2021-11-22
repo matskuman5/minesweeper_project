@@ -40,11 +40,13 @@ void DirectoryHierarchy::addNewDirectory(const std::string &id, const std::strin
  */
 void DirectoryHierarchy::addRelation(const std::string &directory, const std::string &parent, std::ostream &output) {
 
+    Directory *d = getPointer(directory);
+    if (d == nullptr) {
+        output << "Error. " << directory << " not found." << std::endl;
+    }
     if (parent == EMPTY) {
         return;
     }
-
-    Directory *d = getPointer(directory);
     Directory* p = getPointer(parent);
 
     d->parent_ = p;

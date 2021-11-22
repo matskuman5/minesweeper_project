@@ -110,13 +110,21 @@ void DirectoryHierarchy::commandDiskUsage(std::ostream &output) const {
 
     int& du = i;
 
-    for (auto d : wd_->subdirectories_) {
-        getSubdirectorySizes(d, du);
-        output << du << " /" << d->id_ << std::endl;
-        du = 0;
+    if (wd_ == nullptr) {
+        for (auto d : directories_) {
+            if (d->parent_ == nullptr) {
+                getSubdirectorySizes(d, du);
+                output << du << " /" << d->id_ << std::endl;
+                du = 0;
+            }
+        }
+    } else {
+        for (auto d : wd_->subdirectories_) {
+            getSubdirectorySizes(d, du);
+            output << du << " /" << d->id_ << std::endl;
+            du = 0;
+        }
     }
-
-
 
 }
 

@@ -1,4 +1,5 @@
 #include "directoryhierarchy.hh"
+#include <algorithm>
 
 DirectoryHierarchy::DirectoryHierarchy() {
 
@@ -51,6 +52,8 @@ void DirectoryHierarchy::addRelation(const std::string &directory, const std::st
 
     d->parent_ = p;
     p->subdirectories_.push_back(d);
+
+    sortSubdirectories(p);
 
 }
 
@@ -268,5 +271,19 @@ void DirectoryHierarchy::getSubdirectorySizes(Directory *dir, int &du) const {
         //std::cout << "adding top directory: " << dir->size_ << " to du." << std::endl << std::endl;
         du += dir->size_;
     }
+
+}
+
+void DirectoryHierarchy::sortSubdirectories(Directory *dir) {
+
+    std::cout << "weve made it this far, sorting " + dir->id_ << std::endl;
+
+    std::sort(dir->subdirectories_.begin(), dir->subdirectories_.end(), Directory());
+
+}
+
+bool DirectoryHierarchy::compareDirectories(Directory* a, Directory* b) {
+
+    return a->id_ < b->id_;
 
 }

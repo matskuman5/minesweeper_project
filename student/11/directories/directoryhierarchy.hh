@@ -31,6 +31,17 @@ struct Directory
     int size_ = NO_SIZE;
     Directory* parent_ = nullptr;
     std::vector<Directory*> subdirectories_;
+
+    bool operator()(const Directory* l, const Directory* r) {
+            return l->id_ < r->id_;
+          }
+
+    bool operator<(const Directory a) const {
+
+        return id_ < a.id_;
+
+    }
+
 };
 
 // Set of strings
@@ -191,6 +202,9 @@ private:
     std::vector<Directory*> directories_;
 
     void getSubdirectorySizes(Directory *dir, int &du) const;
+
+    void sortSubdirectories(Directory *dir);
+    bool compareDirectories(Directory* a, Directory* b);
 
 };
 

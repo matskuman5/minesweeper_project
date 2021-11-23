@@ -187,10 +187,19 @@ void DirectoryHierarchy::commandFind(const std::string &id, const int n, std::os
 
     bool found = false;
 
-    for (auto d : wd_->subdirectories_) {
-        if (d->id_ == id) {
-            found = true;
-            break;
+    if (wd_ == nullptr) {
+        for (auto d : directories_) {
+            if (d->id_ == id && d->parent_ == nullptr) {
+                found = true;
+                break;
+            }
+        }
+    } else {
+        for (auto d : wd_->subdirectories_) {
+            if (d->id_ == id) {
+                found = true;
+                break;
+            }
         }
     }
 

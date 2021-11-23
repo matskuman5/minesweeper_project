@@ -25,6 +25,13 @@ DirectoryHierarchy::~DirectoryHierarchy() {
  */
 void DirectoryHierarchy::addNewDirectory(const std::string &id, const std::string &timestamp, int size, std::ostream &output) {
 
+    for (auto d : directories_) {
+        if (d->id_ == id) {
+            output << "Error. Directory already added." << std::endl;
+            return;
+        }
+    }
+
     Directory *d = new Directory({id, timestamp, size});
 
     directories_.push_back(d);

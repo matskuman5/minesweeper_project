@@ -46,6 +46,7 @@ void DirectoryHierarchy::addRelation(const std::string &directory, const std::st
         output << "Error. " << directory << " not found." << std::endl;
     }
     if (parent == EMPTY) {
+        std::sort(directories_.begin(), directories_.end(), Directory());
         return;
     }
     Directory* p = getPointer(parent);

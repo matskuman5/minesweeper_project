@@ -7,8 +7,9 @@ DirectoryHierarchy::DirectoryHierarchy() {
 
 }
 
-DirectoryHierarchy::~DirectoryHierarchy()
-{
+DirectoryHierarchy::~DirectoryHierarchy() {
+
+    directories_.clear();
 
 }
 
@@ -277,24 +278,18 @@ void DirectoryHierarchy::printPath(Directory *dir, std::ostream &output) const {
 
 void DirectoryHierarchy::getSubdirectorySizes(Directory *dir, int &du) const {
 
-    //td::cout << "directory: " << dir->id_ << ", size: " << dir->size_ << ", du: " << du << std::endl;
-
     if (dir->subdirectories_.empty()) {
-        //std::cout << "finished, adding: " << dir->size_ << " to du." << std::endl << std::endl;
         du += dir->size_;
     } else {
         for (Directory *d : dir->subdirectories_) {
             getSubdirectorySizes(d, du);
         }
-        //std::cout << "adding top directory: " << dir->size_ << " to du." << std::endl << std::endl;
         du += dir->size_;
     }
 
 }
 
 void DirectoryHierarchy::sortSubdirectories(Directory *dir) {
-
-    //std::cout << "weve made it this far, sorting " + dir->id_ << std::endl;
 
     std::sort(dir->subdirectories_.begin(), dir->subdirectories_.end(), Directory());
 

@@ -276,7 +276,7 @@ void DirectoryHierarchy::getSubdirectorySizes(Directory *dir, int &du) const {
 
 void DirectoryHierarchy::sortSubdirectories(Directory *dir) {
 
-    std::cout << "weve made it this far, sorting " + dir->id_ << std::endl;
+    //std::cout << "weve made it this far, sorting " + dir->id_ << std::endl;
 
     std::sort(dir->subdirectories_.begin(), dir->subdirectories_.end(), Directory());
 

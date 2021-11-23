@@ -183,24 +183,25 @@ private:
     // Returns the pointer for ID.
     Directory* getPointer(const std::string& id) const;
 
-    // Prints errors.
-    void printNotFound(const std::string& id, std::ostream& output) const;
-
-    // Prints the the data in a container.
-    void printContainer(const IdSet& container, std::ostream& output) const;
-
     // Prints the path of the directory.
     void printPath(Directory* dir, std::ostream& output) const;
 
+    //recursive function for use in findCommand
     void findRecursive(Directory* d, int depth, int max_depth, std::string current_path, std::ostream &output) const;
 
+    //pointer to the working directory
     Directory* wd_;
 
+    //vector that contains pointers to all directories in the data structure
     std::vector<Directory*> directories_;
 
+    //recursive function for use in commandDiskUsage
     void getSubdirectorySizes(Directory *dir, int &du) const;
 
+    //sorts the subdirectories of the given directory alphabetically
     void sortSubdirectories(Directory *dir);
+
+    //returns whether or not the id of directory A is alphabetically lower than the id of B
     bool compareDirectories(Directory* a, Directory* b);
 
 };

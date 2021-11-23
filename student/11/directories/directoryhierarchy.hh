@@ -183,9 +183,6 @@ private:
     // Returns the pointer for ID.
     Directory* getPointer(const std::string& id) const;
 
-    // Returns subdirectories of the working directory.
-    IdSet getSubdirectors(const int n, std::string path) const;
-
     // Prints errors.
     void printNotFound(const std::string& id, std::ostream& output) const;
 

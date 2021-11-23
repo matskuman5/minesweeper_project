@@ -266,12 +266,6 @@ void DirectoryHierarchy::findRecursive(Directory* d, int depth, int max_depth, s
 
 }
 
-IdSet DirectoryHierarchy::getSubdirectors(const int n, std::string path) const {
-    
-
-    
-}
-
 void DirectoryHierarchy::printPath(Directory *dir, std::ostream &output) const {
 
     if (dir->parent_ != nullptr) {

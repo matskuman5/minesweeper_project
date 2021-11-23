@@ -173,7 +173,7 @@ private:
     Directory* getPointer(const std::string& id) const;
 
     // Returns subdirectories of the working directory.
-    IdSet getSubdirectors() const;
+    IdSet getSubdirectors(const int n, std::string path) const;
 
     // Prints errors.
     void printNotFound(const std::string& id, std::ostream& output) const;
@@ -183,6 +183,8 @@ private:
 
     // Prints the path of the directory.
     void printPath(Directory* dir, std::ostream& output) const;
+
+    void findRecursive(Directory* d, int depth, int max_depth, std::string current_path, std::ostream &output) const;
 
     Directory* wd_;
 

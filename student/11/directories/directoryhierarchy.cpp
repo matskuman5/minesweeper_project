@@ -160,9 +160,39 @@ void DirectoryHierarchy::commandChangeDirectory(const std::string &id, std::ostr
 
 }
 
-void DirectoryHierarchy::commandFind(const std::string &id, const int n, std::ostream &output) const
-{
+/* Description: Finds the subdirectory ID of the current working directory
+ * and prints all its subdirectories with their paths down to level n.
+ * Parameters:
+ *  Param1: ID of the subdirectory
+ *  Param2: Maximum distance from the current working directory
+ *  (n-1 times "hierarchy").
+ *  Param3: Output-stream for printing
+ * Errormessages:
+ *  If ID is not a subdirectory of the current working directory,
+ *  prints the error message:
+ *      "Error. <ID> not found."
+ *  If Param2's value is less than 1, prints the error message:
+ *      "Error. Level can't be less than 1.
+ */
+void DirectoryHierarchy::commandFind(const std::string &id, const int n, std::ostream &output) const {
+    
+    if (n < 1) {
+        output << "Error. Level can't be less than 1.";
+        return;
+    }
 
+    if (wd_ == nullptr) {
+        for (Directory* d : directories_) {
+            if (d->parent_ == nullptr) {
+                findRecursive(d, 0, n, wd_->id_, output);
+            }
+        }
+    }
+
+    for (auto d : wd_->subdirectories_) {
+        findRecursive(d, 0, n, wd_->id_, output);
+    }
+    
 }
 
 void DirectoryHierarchy::commandAsOldAs(const std::string &id, std::ostream &output) const
@@ -189,7 +219,28 @@ Directory *DirectoryHierarchy::getPointer(const std::string &id) const {
     }
 
     return nullptr;
+    
+}
 
+void DirectoryHierarchy::findRecursive(Directory* d, int depth, int max_depth, std::string current_path, std::ostream &output) const {
+
+    current_path += "/" + d->id_;
+    output << current_path << std::endl;
+
+    depth++;
+
+    if(depth < max_depth) {
+        for (auto d_child : d->subdirectories_) {
+            findRecursive(d_child, depth, max_depth, current_path, output);
+        }
+    }
+
+}
+
+IdSet DirectoryHierarchy::getSubdirectors(const int n, std::string path) const {
+    
+
+    
 }
 
 void DirectoryHierarchy::printPath(Directory *dir, std::ostream &output) const {

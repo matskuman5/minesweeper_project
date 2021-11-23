@@ -181,21 +181,29 @@ void DirectoryHierarchy::commandChangeDirectory(const std::string &id, std::ostr
 void DirectoryHierarchy::commandFind(const std::string &id, const int n, std::ostream &output) const {
     
     if (n < 1) {
-        output << "Error. Level can't be less than 1.";
+        output << "Error. Level can't be less than 1." << std::endl;
         return;
     }
 
-    if (wd_ == nullptr) {
-        for (Directory* d : directories_) {
-            if (d->parent_ == nullptr) {
-                findRecursive(d, 0, n, wd_->id_, output);
-            }
+    bool found = false;
+
+    for (auto d : wd_->subdirectories_) {
+        if (d->id_ == id) {
+            found = true;
+            break;
         }
     }
 
-    for (auto d : wd_->subdirectories_) {
-        findRecursive(d, 0, n, wd_->id_, output);
+    if (!found) {
+        output << "Error. " << id << " not found." << std::endl;
+        return;
     }
+
+    for (auto d : getPointer(id)->subdirectories_) {
+        findRecursive(d, 0, n, id, output);
+    }
+
+
     
 }
 

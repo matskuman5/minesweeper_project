@@ -163,9 +163,23 @@ void DirectoryHierarchy::commandChangeDirectory(const std::string &id, std::ostr
             wd_ = wd_->parent_;
         }
     } else {
-        if (getPointer(id) != nullptr) {
-            wd_ = getPointer(id);
+        if (getPointer(id) == nullptr) {
+            output << "Error. " << id << " not found." << std::endl;
+        } else if (wd_ == nullptr) {
+            for (auto d : directories_) {
+                if (d->id_ == id && d->parent_ == nullptr) {
+                    wd_ = getPointer(id);
+                    return;
+                }
+            }
+            output << "Error. " << id << " not found." << std::endl;
         } else {
+            for (auto d : wd_->subdirectories_) {
+                if (d->id_ == id) {
+                    wd_ = getPointer(id);
+                    return;
+                }
+            }
             output << "Error. " << id << " not found." << std::endl;
         }
     }

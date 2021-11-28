@@ -4,6 +4,9 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
+#include <string>
+#include <vector>
+#include <sstream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -57,13 +60,25 @@ void MainWindow::on_findPushButton_clicked()
                     [](unsigned char c){ return std::tolower(c); });
             }
 
-            if (line.find(key_as_string) != std::string::npos) {
-                ui->textBrowser->append("Word found");
-                found = true;
-                break;
+            std::string buf;                 // Have a buffer string
+            std::stringstream ss(line);       // Insert the string into a stream
+
+            std::vector<std::string> tokens; // Create vector to hold our words
+
+            while (ss >> buf)
+                tokens.push_back(buf);
+
+            for (std::string s : tokens) {
+                if (s == key_as_string) {
+                    ui->textBrowser->append("Word found");
+                    found = true;
+                    goto exit;
+                }
             }
 
         }
+
+        exit:
 
         if (empty) {
             ui->textBrowser->append("File found");

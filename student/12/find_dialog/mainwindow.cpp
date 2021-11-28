@@ -43,6 +43,8 @@ void MainWindow::on_findPushButton_clicked()
     std::ifstream reader(file_.toStdString());
     std::string key_as_string = key_.toStdString();
 
+    ui->textBrowser->clear();
+
     if(reader) {
 
         std::string line;

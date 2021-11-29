@@ -33,8 +33,7 @@ void MainWindow::on_countButton_clicked()
     double height_cm = height_d / 100;
 
     if (height == 0) {
-        ui->resultLabel->setText("");
-        ui->infoTextBrowser->append("Cannot count");
+        ui->resultLabel->setText("Cannot count");
     } else {
 
         qDebug() << weight << ", " << height_cm;
@@ -42,11 +41,11 @@ void MainWindow::on_countButton_clicked()
         double bmi = weight / std::pow(height_cm, 2);
 
         if (bmi < 18.5) {
-            ui->infoTextBrowser->append("You are underweight");
+            ui->infoTextBrowser->append("You are underweight.");
         } else if (bmi < 25) {
-            ui->infoTextBrowser->append("Your weight is normal");
+            ui->infoTextBrowser->append("Your weight is normal.");
         } else {
-            ui->infoTextBrowser->append("You are overweight");
+            ui->infoTextBrowser->append("You are overweight.");
         }
 
         std::string s_bmi = std::to_string(bmi);

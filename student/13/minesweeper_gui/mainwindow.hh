@@ -25,7 +25,7 @@ public:
 
 private slots:
     void square_click();
-    void reset_button_click();
+    void new_game_button_click();
     void timer_tick();
 
 private:
@@ -40,7 +40,7 @@ private:
     QGridLayout* board_grid;
     QGridLayout* button_grid;
 
-    QPushButton* reset_button_;
+    QPushButton* new_game_button_;
     QPushButton* check_button_;
     QLineEdit* seed_line_edit_;
     QTextBrowser* text_browser_;

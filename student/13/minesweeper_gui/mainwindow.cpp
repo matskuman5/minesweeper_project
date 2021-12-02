@@ -17,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(central);
     main_grid = new QGridLayout(central);
 
-    reset_button_ = new QPushButton("Reset", this);
-    connect(reset_button_, &QPushButton::clicked, this, &MainWindow::reset_button_click);
+    new_game_button_ = new QPushButton("New Game", this);
+    connect(new_game_button_, &QPushButton::clicked, this, &MainWindow::new_game_button_click);
 
     check_button_ = new QPushButton("Check", this);
 
@@ -37,12 +37,14 @@ MainWindow::MainWindow(QWidget *parent)
     seconds_ = 0;
 
     button_grid = new QGridLayout(central);
-    button_grid->addWidget(reset_button_, 0, 0);
+    button_grid->addWidget(new_game_button_, 0, 0);
     button_grid->addWidget(check_button_, 0, 1);
     button_grid->addWidget(seed_line_edit_, 1, 0);
     button_grid->addWidget(text_browser_, 2, 0);
     button_grid->addWidget(time_, 1, 1);
     main_grid->addLayout(button_grid, 1, 0);
+
+    text_browser_->append("Welcome! Enter a seed and press 'New Game' to begin!");
 
     board_grid = new QGridLayout();
     main_grid->addLayout(board_grid, 0, 0);
@@ -93,7 +95,7 @@ void MainWindow::square_click() {
 
 }
 
-void MainWindow::reset_button_click() {
+void MainWindow::new_game_button_click() {
 
     for (QChar qc : seed_line_edit_->text()) {
         if (!qc.isDigit()) {
@@ -159,7 +161,7 @@ void MainWindow::end_game(bool won) {
         text_browser_->append("BOOM! You lost!");
     }
 
-    text_browser_->append("Game over! Enter a seed and press Reset to start again!");
+    text_browser_->append("Game over! Enter a seed and press 'New Game' to start again!");
 
 }
 

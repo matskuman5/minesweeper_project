@@ -45,6 +45,8 @@ void MainWindow::square_click() {
             }
 
             qDebug() << board_.openSquare(x, y);
+            qDebug() << tb->sizeHint();
+            qDebug() << tb->sizePolicy();
 
             tb->setDisabled(true);
 
@@ -57,7 +59,7 @@ void MainWindow::init_squares() {
 
     central = new QWidget(this);
     gLayout = new QGridLayout(central);
-    gLayout->setSpacing(0);
+    gLayout->setSpacing(3);
 
     for (unsigned int x = 0; x < board_size_; x++) {
         for (unsigned int y = 0; y < board_size_; y++) {
@@ -66,6 +68,11 @@ void MainWindow::init_squares() {
 
             QToolButton* toolButton = new QToolButton(this);
             toolButton->setObjectName(button_name);
+
+            //set the SizePolicy of the button to Expanding so it resizes properly
+            QSizePolicy* sp = new QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            toolButton->setSizePolicy(*sp);
+
             buttons_.push_back(toolButton);
 
             connect(toolButton, &QToolButton::clicked, this, &MainWindow::square_click);

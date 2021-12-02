@@ -2,7 +2,7 @@
 #define MAINWINDOW_HH
 
 #include <QMainWindow>
-#include <QPushButton>
+#include <QToolButton>
 #include <QGridLayout>
 #include <gameboard.hh>
 #include <vector>
@@ -28,7 +28,7 @@ private:
     GameBoard board_;
     unsigned int board_size_;
 
-    std::vector<QPushButton*> buttons_;
+    std::vector<QToolButton*> buttons_;
     QWidget* central;
     QGridLayout* gLayout;
 

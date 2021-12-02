@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <string>
+#include <QToolButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,9 +25,28 @@ void MainWindow::square_click() {
 
     qDebug() << "test";
 
-    for (QPushButton* pb : buttons_) {
-        if (pb == sender()) {
-            qDebug() << pb->objectName();
+    for (QToolButton* tb : buttons_) {
+        if (tb == sender()) {
+
+            qDebug() << tb->objectName();
+
+            std::string coordinates = tb->objectName().toStdString();
+
+            //note: will have to change this to support boards over 9x9
+            int x = coordinates.at(0) - '0';
+            int y = coordinates.at(2) - '0';
+
+            Square s = board_.getSquare(x, y);
+
+            if (board_.openSquare(x, y)) {
+                tb->setText(QString::number(s.countAdjacent()));
+            } else {
+                tb->setText("*");
+            }
+
+            qDebug() << board_.openSquare(x, y);
+
+            tb->setDisabled(true);
 
         }
     }
@@ -37,20 +57,20 @@ void MainWindow::init_squares() {
 
     central = new QWidget(this);
     gLayout = new QGridLayout(central);
+    gLayout->setSpacing(0);
 
     for (unsigned int x = 0; x < board_size_; x++) {
         for (unsigned int y = 0; y < board_size_; y++) {
 
             QString button_name = QString::fromStdString(std::to_string(x) + " " + std::to_string(y));
 
-            QPushButton* pushButton = new QPushButton(this);
+            QToolButton* toolButton = new QToolButton(this);
+            toolButton->setObjectName(button_name);
+            buttons_.push_back(toolButton);
 
-            pushButton->setObjectName(button_name);
-            buttons_.push_back(pushButton);
+            connect(toolButton, &QToolButton::clicked, this, &MainWindow::square_click);
 
-            connect(pushButton, &QPushButton::clicked, this, &MainWindow::square_click);
-
-            gLayout->addWidget(pushButton, y, x);
+            gLayout->addWidget(toolButton, y, x);
 
         }
     }

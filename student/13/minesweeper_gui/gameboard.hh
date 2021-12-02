@@ -17,7 +17,6 @@
 #include "square.hh"
 #include <vector>
 
-const int BOARD_SIDE = 6;
 const int MINE_PROBABALITY = 20; // in percents
 
 class GameBoard
@@ -26,9 +25,9 @@ public:
     GameBoard();
     ~GameBoard();
 
-    // Initializes the board, i.e. forms square objects and calculates data
+    // Initializes a size x size board, i.e. forms square objects and calculates data
     // needed by them.
-    void init(int seed);
+    void init(int seed, unsigned int size);
 
     // Prints the game board.
     void print(std::ostream& stream) const;
@@ -50,6 +49,7 @@ public:
 
 private:
     std::vector<std::vector<Square>> board_;
+    unsigned int board_size_;
 };
 
 #endif // GAMEBOARD_HH

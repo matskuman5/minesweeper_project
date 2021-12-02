@@ -9,15 +9,17 @@ GameBoard::~GameBoard()
 {
 }
 
-void GameBoard::init(int seed)
+void GameBoard::init(int seed, unsigned int size)
 {
     std::default_random_engine randomEng(seed);
     std::uniform_int_distribution<int> distribution(1, 100/MINE_PROBABALITY);
 
-    for(int y = 0; y < BOARD_SIDE; ++y)
+    board_size_ = size;
+
+    for(unsigned int y = 0; y < board_size_; ++y)
     {
         std::vector<Square> line;
-        for(int x = 0; x < BOARD_SIDE; ++x)
+        for(unsigned int x = 0; x < board_size_; ++x)
         {
             bool hasMine = false;
             if(distribution(randomEng) == 1)
@@ -33,9 +35,9 @@ void GameBoard::init(int seed)
     // When all the squares of the board exist, each square is asked to
     // calculate the data telling how many mines lie in the adjacent squares.
     // After that game board is ready.
-    for(int y = 0; y < BOARD_SIDE; ++y)
+    for(unsigned int y = 0; y < board_size_; ++y)
     {
-        for(int x = 0; x < BOARD_SIDE; ++x)
+        for(unsigned int x = 0; x < board_size_; ++x)
         {
             board_.at(y).at(x).countAdjacent();
         }
@@ -48,7 +50,7 @@ void GameBoard::print(std::ostream& stream) const
 
     // Printing numbers of x-axis over the board
     stream << "  ";
-    for(int x = 0; x < BOARD_SIDE; ++x)
+    for(unsigned int x = 0; x < board_size_; ++x)
     {
         // Using modulo 10 to make the output fit, even if the board width
         // was more than 10
@@ -58,10 +60,10 @@ void GameBoard::print(std::ostream& stream) const
 
     // Printing the board such that each line begins with y-coordinate,
     // and then each square of the line is asked to print itself
-    for(int y = 0; y < BOARD_SIDE; ++y)
+    for(unsigned int y = 0; y < board_size_; ++y)
     {
         stream << (y + 1) % 10 << ' ';
-        for(int x = 0; x < BOARD_SIDE; ++x)
+        for(unsigned int x = 0; x < board_size_; ++x)
         {
             board_.at(y).at(x).print(stream); // Replace print with debugPrint
             stream << " ";                    // to see opened squares.
@@ -72,9 +74,9 @@ void GameBoard::print(std::ostream& stream) const
 
 bool GameBoard::isGameOver() const
 {
-    for(int y = 0; y < BOARD_SIDE; ++y)
+    for(unsigned int y = 0; y < board_size_; ++y)
     {
-        for(int x = 0; x < BOARD_SIDE; ++x)
+        for(unsigned int x = 0; x < board_size_; ++x)
         {
             if(not board_.at(y).at(x).isReady())
             {

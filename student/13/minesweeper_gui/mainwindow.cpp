@@ -10,9 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    board_size_ = 6;
-    board_.init(0);
-
     central = new QWidget(this);
     setCentralWidget(central);
     main_grid = new QGridLayout(central);
@@ -27,8 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     board_size_spinbox_ = new QSpinBox();
     board_size_spinbox_->setMinimum(2);
+    board_size_spinbox_->setMaximum(10);
     board_size_label_ = new QLabel();
-    board_size_label_->setText("Board size: (2-99)");
+    board_size_label_->setText("Board size: (2-10)");
 
     text_browser_ = new QTextBrowser();
 
@@ -121,11 +119,11 @@ void MainWindow::new_game_button_click() {
     main_grid->addLayout(board_grid, 0, 0);
     board_grid->setSpacing(3);
 
-    init_squares();
-
     board_ = GameBoard();
 
-    board_.init(seed_line_edit_->text().toInt());
+    board_.init(seed_line_edit_->text().toInt(), board_size_spinbox_->value());
+
+    init_squares();
 
     minutes_ = 0;
     seconds_ = 0;
@@ -171,8 +169,8 @@ void MainWindow::end_game(bool won) {
 
 void MainWindow::init_squares() {
 
-    for (unsigned int x = 0; x < board_size_; x++) {
-        for (unsigned int y = 0; y < board_size_; y++) {
+    for (unsigned int x = 0; x < board_size_spinbox_->value(); x++) {
+        for (unsigned int y = 0; y < board_size_spinbox_->value(); y++) {
 
             QString button_name = QString::fromStdString(std::to_string(x) + " " + std::to_string(y));
 

@@ -25,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     seed_line_edit_ = new QLineEdit();
     seed_line_edit_->setPlaceholderText("Seed:");
 
+    board_size_spinbox_ = new QSpinBox();
+    board_size_spinbox_->setMinimum(2);
+    board_size_label_ = new QLabel();
+    board_size_label_->setText("Board size: (2-99)");
+
     text_browser_ = new QTextBrowser();
 
     timer_ = new QTimer(this);
@@ -41,7 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
     button_grid->addWidget(check_button_, 0, 1);
     button_grid->addWidget(seed_line_edit_, 1, 0);
     button_grid->addWidget(text_browser_, 2, 0);
-    button_grid->addWidget(time_, 1, 1);
+    button_grid->addWidget(time_, 2, 1);
+    button_grid->addWidget(board_size_label_, 1, 1);
+    button_grid->addWidget(board_size_spinbox_, 1, 2);
     main_grid->addLayout(button_grid, 1, 0);
 
     text_browser_->append("Welcome! Enter a seed and press 'New Game' to begin!");

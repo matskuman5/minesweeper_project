@@ -8,6 +8,7 @@
 #include <QTextBrowser>
 #include <QLineEdit>
 #include <QLabel>
+#include <QSpinBox>
 #include <gameboard.hh>
 #include <vector>
 
@@ -43,6 +44,9 @@ private:
     QPushButton* new_game_button_;
     QPushButton* check_button_;
     QLineEdit* seed_line_edit_;
+    QSpinBox* board_size_spinbox_;
+    QLabel* board_size_label_;
+
     QTextBrowser* text_browser_;
     QTimer* timer_;
     QLabel* time_;

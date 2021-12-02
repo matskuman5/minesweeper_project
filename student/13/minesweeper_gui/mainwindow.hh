@@ -23,6 +23,7 @@ public:
 
 private slots:
     void square_click();
+    void reset_button_click();
 
 private:
     Ui::MainWindow *ui;
@@ -40,6 +41,7 @@ private:
     QPushButton* check_button_;
 
     void init_squares();
+//    void end_game();
 
 };
 #endif // MAINWINDOW_HH

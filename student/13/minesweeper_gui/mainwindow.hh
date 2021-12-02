@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QToolButton>
 #include <QGridLayout>
+#include <QPushButton>
+#include <QTextBrowser>
 #include <gameboard.hh>
 #include <vector>
 
@@ -30,7 +32,12 @@ private:
 
     std::vector<QToolButton*> buttons_;
     QWidget* central;
-    QGridLayout* gLayout;
+    QGridLayout* main_grid;
+    QGridLayout* board_grid;
+    QGridLayout* button_grid;
+
+    QPushButton* reset_button_;
+    QPushButton* check_button_;
 
     void init_squares();
 

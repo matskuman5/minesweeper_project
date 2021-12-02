@@ -13,6 +13,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     board_.init(0);
 
+    central = new QWidget(this);
+    setCentralWidget(central);
+    main_grid = new QGridLayout(central);
+
+    reset_button_ = new QPushButton("Reset", this);
+    check_button_ = new QPushButton("Check", this);
+
+    button_grid = new QGridLayout(central);
+    button_grid->addWidget(reset_button_, 0, 0);
+    button_grid->addWidget(check_button_, 0, 1);
+    main_grid->addLayout(button_grid, 1, 0);
+
     init_squares();
 
 }
@@ -57,9 +69,9 @@ void MainWindow::square_click() {
 
 void MainWindow::init_squares() {
 
-    central = new QWidget(this);
-    gLayout = new QGridLayout(central);
-    gLayout->setSpacing(3);
+    board_grid = new QGridLayout();
+    main_grid->addLayout(board_grid, 0, 0);
+    board_grid->setSpacing(3);
 
     for (unsigned int x = 0; x < board_size_; x++) {
         for (unsigned int y = 0; y < board_size_; y++) {
@@ -77,11 +89,9 @@ void MainWindow::init_squares() {
 
             connect(toolButton, &QToolButton::clicked, this, &MainWindow::square_click);
 
-            gLayout->addWidget(toolButton, y, x);
+            board_grid->addWidget(toolButton, y, x);
 
         }
     }
-
-    setCentralWidget(central);
 
 }

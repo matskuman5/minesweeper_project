@@ -19,6 +19,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void square_click();
+
 private:
     Ui::MainWindow *ui;
 

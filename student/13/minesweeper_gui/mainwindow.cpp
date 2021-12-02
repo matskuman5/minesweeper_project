@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     board_size_ = 6;
-
     board_.init(0);
 
     central = new QWidget(this);
@@ -22,9 +21,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     check_button_ = new QPushButton("Check", this);
 
+    seed_line_edit_ = new QLineEdit();
+    seed_line_edit_->setPlaceholderText("Seed:");
+
+    text_browser_ = new QTextBrowser();
+
     button_grid = new QGridLayout(central);
     button_grid->addWidget(reset_button_, 0, 0);
     button_grid->addWidget(check_button_, 0, 1);
+    button_grid->addWidget(seed_line_edit_, 1, 0);
+    button_grid->addWidget(text_browser_, 2, 0);
     main_grid->addLayout(button_grid, 1, 0);
 
     board_grid = new QGridLayout();
@@ -75,6 +81,18 @@ void MainWindow::square_click() {
 
 void MainWindow::reset_button_click() {
 
+    for (QChar qc : seed_line_edit_->text()) {
+        if (!qc.isDigit()) {
+            text_browser_->append("Error: seed must be an integer value");
+            return;
+        }
+    }
+
+    if (seed_line_edit_->text().isEmpty()) {
+        text_browser_->append("Error: empty seed");
+        return;
+    }
+
     qDebug() << "reset";
 
     for (QToolButton* tb : buttons_) {
@@ -84,6 +102,10 @@ void MainWindow::reset_button_click() {
 
 
     init_squares();
+
+    board_ = GameBoard();
+
+    board_.init(seed_line_edit_->text().toInt());
 
 }
 

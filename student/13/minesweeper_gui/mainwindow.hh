@@ -6,6 +6,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTextBrowser>
+#include <QLineEdit>
 #include <gameboard.hh>
 #include <vector>
 
@@ -39,6 +40,8 @@ private:
 
     QPushButton* reset_button_;
     QPushButton* check_button_;
+    QLineEdit* seed_line_edit_;
+    QTextBrowser* text_browser_;
 
     void init_squares();
 //    void end_game();

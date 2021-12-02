@@ -2,6 +2,10 @@
 #define MAINWINDOW_HH
 
 #include <QMainWindow>
+#include <QPushButton>
+#include <QGridLayout>
+#include <gameboard.hh>
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +21,15 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    GameBoard board_;
+    unsigned int board_size_;
+
+    std::vector<QPushButton*> buttons_;
+    QWidget* central;
+    QGridLayout* gLayout;
+
+    void init_squares();
+
 };
 #endif // MAINWINDOW_HH

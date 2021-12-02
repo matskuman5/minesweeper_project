@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QTextBrowser>
 #include <QLineEdit>
+#include <QLabel>
 #include <gameboard.hh>
 #include <vector>
 
@@ -25,6 +26,7 @@ public:
 private slots:
     void square_click();
     void reset_button_click();
+    void timer_tick();
 
 private:
     Ui::MainWindow *ui;
@@ -42,6 +44,11 @@ private:
     QPushButton* check_button_;
     QLineEdit* seed_line_edit_;
     QTextBrowser* text_browser_;
+    QTimer* timer_;
+    QLabel* time_;
+
+    unsigned int minutes_;
+    unsigned int seconds_;
 
     void init_squares();
     void end_game(bool won);

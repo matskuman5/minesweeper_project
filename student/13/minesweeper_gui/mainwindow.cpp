@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <string>
 #include <QToolButton>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -26,11 +27,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     text_browser_ = new QTextBrowser();
 
+    timer_ = new QTimer(this);
+    timer_->setInterval(1000);
+    connect(timer_, &QTimer::timeout, this, &MainWindow::timer_tick);
+
+    time_ = new QLabel(this);
+    time_->setText("Time: 0:00");
+    minutes_ = 0;
+    seconds_ = 0;
+
     button_grid = new QGridLayout(central);
     button_grid->addWidget(reset_button_, 0, 0);
     button_grid->addWidget(check_button_, 0, 1);
     button_grid->addWidget(seed_line_edit_, 1, 0);
     button_grid->addWidget(text_browser_, 2, 0);
+    button_grid->addWidget(time_, 1, 1);
     main_grid->addLayout(button_grid, 1, 0);
 
     board_grid = new QGridLayout();
@@ -110,6 +121,28 @@ void MainWindow::reset_button_click() {
 
     board_.init(seed_line_edit_->text().toInt());
 
+    minutes_ = 0;
+    seconds_ = 0;
+    timer_->start();
+
+}
+
+void MainWindow::timer_tick() {
+
+    if (seconds_ == 59) {
+        minutes_++;
+        seconds_ = 0;
+    } else {
+        seconds_++;
+    }
+
+    //this is to make sure we get a leading zero, e.g. "0:05" instead of "0:5"
+    if (seconds_ < 10) {
+        time_->setText("Time: " + QString::number(minutes_) + ":0" + QString::number(seconds_));
+    } else {
+        time_->setText("Time: " + QString::number(minutes_) + ":" + QString::number(seconds_));
+    }
+
 }
 
 void MainWindow::end_game(bool won) {
@@ -117,6 +150,8 @@ void MainWindow::end_game(bool won) {
     for (QToolButton* tb : buttons_) {
         tb->setDisabled(true);
     }
+
+    timer_->stop();
 
     if (won) {
         text_browser_->append("You won, great job!");

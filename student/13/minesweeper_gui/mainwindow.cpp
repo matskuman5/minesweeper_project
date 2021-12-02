@@ -53,12 +53,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     text_browser_->append("Welcome! Enter a seed and press 'New Game' to begin!");
 
-    board_grid = new QGridLayout();
-    main_grid->addLayout(board_grid, 0, 0);
-    board_grid->setSpacing(3);
-
-    init_squares();
-
 }
 
 MainWindow::~MainWindow() {
@@ -123,6 +117,9 @@ void MainWindow::new_game_button_click() {
     }
     buttons_.clear();
 
+    board_grid = new QGridLayout();
+    main_grid->addLayout(board_grid, 0, 0);
+    board_grid->setSpacing(3);
 
     init_squares();
 

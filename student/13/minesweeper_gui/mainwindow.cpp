@@ -64,9 +64,12 @@ void MainWindow::square_click() {
 
             if (board_.openSquare(x, y)) {
                 tb->setText(QString::number(s.countAdjacent()));
+                if (board_.isGameOver()) {
+                    end_game(true);
+                }
             } else {
                 tb->setText("*");
-//                end_game();
+                end_game(false);
             }
 
             qDebug() << board_.openSquare(x, y);
@@ -109,13 +112,21 @@ void MainWindow::reset_button_click() {
 
 }
 
-//void MainWindow::end_game() {
+void MainWindow::end_game(bool won) {
 
-//    for (QToolButton* tb : buttons_) {
-//        tb->setDisabled(true);
-//    }
+    for (QToolButton* tb : buttons_) {
+        tb->setDisabled(true);
+    }
 
-//}
+    if (won) {
+        text_browser_->append("You won, great job!");
+    } else {
+        text_browser_->append("BOOM! You lost!");
+    }
+
+    text_browser_->append("Game over! Enter a seed and press Reset to start again!");
+
+}
 
 void MainWindow::init_squares() {
 

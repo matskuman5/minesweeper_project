@@ -44,7 +44,7 @@ private:
     QTextBrowser* text_browser_;
 
     void init_squares();
-//    void end_game();
+    void end_game(bool won);
 
 };
 #endif // MAINWINDOW_HH

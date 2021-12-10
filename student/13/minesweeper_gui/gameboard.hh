@@ -47,6 +47,9 @@ public:
     // Opens the square in the given location.
     bool openSquare(int x, int y);
 
+    // Flags or deflags the square in the given location. Returns whether or not a flag was placed.
+    bool flagSquare(int x, int y);
+
 private:
     std::vector<std::vector<Square>> board_;
     unsigned int board_size_;

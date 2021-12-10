@@ -106,3 +106,15 @@ bool GameBoard::openSquare(int x, int y)
 {
     return board_.at(y).at(x).open();
 }
+
+bool GameBoard::flagSquare(int x, int y)
+{
+    if (!board_.at(y).at(x).hasFlag()) {
+        board_.at(y).at(x).addFlag();
+        return true;
+    } else {
+        board_.at(y).at(x).removeFlag();
+        return false;
+    }
+
+}

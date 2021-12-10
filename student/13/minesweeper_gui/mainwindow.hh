@@ -11,6 +11,7 @@
 #include <QSpinBox>
 #include <gameboard.hh>
 #include <vector>
+#include "qrightclickbutton.hh"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,7 +26,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void square_click();
+    void square_leftclick();
+    void square_rightclick();
     void new_game_button_click();
     void timer_tick();
 
@@ -35,7 +37,7 @@ private:
     GameBoard board_;
     unsigned int board_size_;
 
-    std::vector<QToolButton*> buttons_;
+    std::vector<QRightClickButton*> buttons_;
     QWidget* central;
     QGridLayout* main_grid;
     QGridLayout* board_grid;

@@ -1,5 +1,6 @@
 #include "mainwindow.hh"
 #include "ui_mainwindow.h"
+#include "qrightclickbutton.hh"
 #include <QDebug>
 #include <string>
 #include <QToolButton>
@@ -57,16 +58,20 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::square_click() {
+void MainWindow::square_leftclick() {
 
     qDebug() << "test";
 
-    for (QToolButton* tb : buttons_) {
-        if (tb == sender()) {
+    for (auto b : buttons_) {
+        if (b == sender()) {
 
-            qDebug() << tb->objectName();
+            if (b->text() == "F") {
+                return;
+            }
 
-            std::string coordinates = tb->objectName().toStdString();
+            qDebug() << b->objectName();
+
+            std::string coordinates = b->objectName().toStdString();
 
             //note: will have to change this to support boards over 9x9
             int x = coordinates.at(0) - '0';
@@ -75,20 +80,48 @@ void MainWindow::square_click() {
             Square s = board_.getSquare(x, y);
 
             if (board_.openSquare(x, y)) {
-                tb->setText(QString::number(s.countAdjacent()));
+                b->setText(QString::number(s.countAdjacent()));
                 if (board_.isGameOver()) {
                     end_game(true);
                 }
             } else {
-                tb->setText("*");
+                b->setText("*");
                 end_game(false);
             }
 
             qDebug() << board_.openSquare(x, y);
-            qDebug() << tb->sizeHint();
-            qDebug() << tb->sizePolicy();
+            qDebug() << b->sizeHint();
+            qDebug() << b->sizePolicy();
 
-            tb->setDisabled(true);
+            b->setDisabled(true);
+
+            break;
+        }
+    }
+
+}
+
+void MainWindow::square_rightclick() {
+
+    for (auto b : buttons_) {
+        if (b == sender()) {
+
+            std::string coordinates = b->objectName().toStdString();
+
+            //note: will have to change this to support boards over 9x9
+            int x = coordinates.at(0) - '0';
+            int y = coordinates.at(2) - '0';
+
+            if (board_.flagSquare(x, y)) {
+                qDebug() << "flagged " << x << ", " << y;
+                b->setText("F");
+            } else {
+                qDebug() << "deflagged " << x << ", " << y;
+                b->setText("");
+            }
+
+            break;
+
         }
     }
 
@@ -151,8 +184,8 @@ void MainWindow::timer_tick() {
 
 void MainWindow::end_game(bool won) {
 
-    for (QToolButton* tb : buttons_) {
-        tb->setDisabled(true);
+    for (auto b : buttons_) {
+        b->setDisabled(true);
     }
 
     timer_->stop();
@@ -174,18 +207,19 @@ void MainWindow::init_squares() {
 
             QString button_name = QString::fromStdString(std::to_string(x) + " " + std::to_string(y));
 
-            QToolButton* toolButton = new QToolButton(this);
-            toolButton->setObjectName(button_name);
+            QRightClickButton* rightclickButton = new QRightClickButton(this);
+            rightclickButton->setObjectName(button_name);
 
             //set the SizePolicy of the button to Expanding so it resizes properly
             QSizePolicy* sp = new QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-            toolButton->setSizePolicy(*sp);
+            rightclickButton->setSizePolicy(*sp);
 
-            buttons_.push_back(toolButton);
+            buttons_.push_back(rightclickButton);
 
-            connect(toolButton, &QToolButton::clicked, this, &MainWindow::square_click);
+            connect(rightclickButton, &QToolButton::clicked, this, &MainWindow::square_leftclick);
+            connect(rightclickButton, &QRightClickButton::rightClicked, this, &MainWindow::square_rightclick);
 
-            board_grid->addWidget(toolButton, y, x);
+            board_grid->addWidget(rightclickButton, y, x);
 
         }
     }

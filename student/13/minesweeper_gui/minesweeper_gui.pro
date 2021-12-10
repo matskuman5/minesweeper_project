@@ -12,11 +12,13 @@ SOURCES += \
     gameboard.cpp \
     main.cpp \
     mainwindow.cpp \
+    qrightclickbutton.cpp \
     square.cpp
 
 HEADERS += \
     gameboard.hh \
     mainwindow.hh \
+    qrightclickbutton.hh \
     square.hh
 
 FORMS += \

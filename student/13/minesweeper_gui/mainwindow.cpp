@@ -192,6 +192,11 @@ void MainWindow::end_game(bool won) {
 
     if (won) {
         text_browser_->append("You won, great job!");
+        for (auto b : buttons_) {
+            if (b->isEnabled()) {
+                b->setText("*");
+            }
+        }
     } else {
         text_browser_->append("BOOM! You lost!");
     }

@@ -36,7 +36,6 @@ private:
     Ui::MainWindow *ui;
 
     GameBoard board_;
-    unsigned int board_size_;
 
     std::vector<QRightClickButton*> buttons_;
     QWidget* central;

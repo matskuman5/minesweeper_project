@@ -314,8 +314,8 @@ void MainWindow::end_game(bool won) {
 
 void MainWindow::init_squares() {
 
-    for (unsigned int x = 0; x < board_size_spinbox_->value(); x++) {
-        for (unsigned int y = 0; y < board_size_spinbox_->value(); y++) {
+    for (int x = 0; x < board_size_spinbox_->value(); x++) {
+        for (int y = 0; y < board_size_spinbox_->value(); y++) {
 
             QString button_name = QString::fromStdString(std::to_string(x) + " " + std::to_string(y));
 

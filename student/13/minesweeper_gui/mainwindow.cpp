@@ -25,9 +25,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     board_size_spinbox_ = new QSpinBox();
     board_size_spinbox_->setMinimum(2);
-    board_size_spinbox_->setMaximum(10);
+    board_size_spinbox_->setMaximum(30);
     board_size_label_ = new QLabel();
-    board_size_label_->setText("Board size: (2-10)");
+    board_size_label_->setText("Board size: (2-30)");
 
     text_browser_ = new QTextBrowser();
 
@@ -69,9 +69,9 @@ void MainWindow::square_leftclick() {
 
             std::string coordinates = b->objectName().toStdString();
 
-            //note: will have to change this to support boards over 9x9
-            int x = coordinates.at(0) - '0';
-            int y = coordinates.at(2) - '0';
+            std::vector<int> xy = coordinates_from_string(coordinates);
+            int x = xy.at(0);
+            int y = xy.at(1);
 
             Square s = board_.getSquare(x, y);
 
@@ -111,9 +111,9 @@ void MainWindow::square_rightclick() {
 
             std::string coordinates = b->objectName().toStdString();
 
-            //note: will have to change this to support boards over 9x9
-            int x = coordinates.at(0) - '0';
-            int y = coordinates.at(2) - '0';
+            std::vector<int> xy = coordinates_from_string(coordinates);
+            int x = xy.at(0);
+            int y = xy.at(1);
 
             if (board_.flagSquare(x, y)) {
                 qDebug() << "flagged " << x << ", " << y;
@@ -134,6 +134,21 @@ void MainWindow::square_rightclick() {
 
         }
     }
+
+}
+
+std::vector<int> MainWindow::coordinates_from_string(std::string s) {
+
+    std::vector<int> coordinates;
+
+    int x = std::stoi(s.substr(0, s.find(" ")));
+    s.erase(0, s.find(" ") + 1);
+    int y = std::stoi(s);
+
+    coordinates.push_back(x);
+    coordinates.push_back(y);
+
+    return coordinates;
 
 }
 

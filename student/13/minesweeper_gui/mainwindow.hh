@@ -58,6 +58,7 @@ private:
 
     void init_squares();
     void end_game(bool won);
+    std::vector<int> coordinates_from_string(std::string s);
 
 };
 #endif // MAINWINDOW_HH

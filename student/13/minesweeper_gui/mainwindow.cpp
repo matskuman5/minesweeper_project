@@ -59,17 +59,14 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::open_square_button(int x, int y) {
+void MainWindow::open_button(int x, int y) {
 
     QToolButton* b = get_button(x, y);
 
     Square s = board_.getSquare(x, y);
 
     if (s.hasMine()) {
-        std::string filename = ":/images/bomb.png";
-        QPixmap image(QString::fromStdString(filename));
-
-        b->setIcon(image);
+        b->setIcon(QPixmap(":/images/bomb.png"));
     } else {
         b->setText(QString::number(s.countAdjacent()));
         qDebug() << "<open_square_button> disabling " << x << ", " << y;
@@ -86,7 +83,7 @@ void MainWindow::handle_opening(int x, int y) {
         return;
     }
 
-    open_square_button(x, y);
+    open_button(x, y);
 
     if (s.hasMine()) {
         end_game(false);

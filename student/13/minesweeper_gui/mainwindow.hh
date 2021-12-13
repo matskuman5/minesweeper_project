@@ -56,7 +56,7 @@ private:
     unsigned int minutes_;
     unsigned int seconds_;
 
-    void open_square_button(int x, int y);
+    void open_button(int x, int y);
     void init_squares();
     void end_game(bool won);
     std::vector<int> coordinates_from_string(std::string s);

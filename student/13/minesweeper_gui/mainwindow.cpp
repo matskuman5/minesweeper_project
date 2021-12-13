@@ -65,10 +65,6 @@ void MainWindow::square_leftclick() {
     for (auto b : buttons_) {
         if (b == sender()) {
 
-            if (b->text() == "F") {
-                return;
-            }
-
             qDebug() << b->objectName();
 
             std::string coordinates = b->objectName().toStdString();
@@ -79,13 +75,20 @@ void MainWindow::square_leftclick() {
 
             Square s = board_.getSquare(x, y);
 
+            if (s.hasFlag()) {
+                return;
+            }
+
             if (board_.openSquare(x, y)) {
                 b->setText(QString::number(s.countAdjacent()));
                 if (board_.isGameOver()) {
                     end_game(true);
                 }
             } else {
-                b->setText("*");
+                std::string filename = ":/images/bomb.png";
+                QPixmap image(QString::fromStdString(filename));
+
+                b->setIcon(image);
                 end_game(false);
             }
 
@@ -114,10 +117,17 @@ void MainWindow::square_rightclick() {
 
             if (board_.flagSquare(x, y)) {
                 qDebug() << "flagged " << x << ", " << y;
-                b->setText("F");
+
+                std::string filename = ":/images/flag.png";
+                QPixmap image(QString::fromStdString(filename));
+
+                b->setIcon(image);
+
             } else {
                 qDebug() << "deflagged " << x << ", " << y;
-                b->setText("");
+
+                //remove the flag by setting the icon to be an empty image
+                b->setIcon(QIcon());
             }
 
             break;

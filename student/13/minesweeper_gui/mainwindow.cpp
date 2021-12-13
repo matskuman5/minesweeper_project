@@ -60,7 +60,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::open_button(int x, int y) {
+void MainWindow::open_button_ui(int x, int y) {
 
     QToolButton* b = get_button(x, y);
 
@@ -96,7 +96,7 @@ void MainWindow::open_button(int x, int y) {
 
 }
 
-void MainWindow::handle_opening(int x, int y) {
+void MainWindow::open_button_board(int x, int y) {
 
     Square s = board_.getSquare(x, y);
 
@@ -104,7 +104,7 @@ void MainWindow::handle_opening(int x, int y) {
         return;
     }
 
-    open_button(x, y);
+    open_button_ui(x, y);
 
     if (s.hasMine()) {
         end_game(false);
@@ -128,7 +128,7 @@ void MainWindow::handle_opening(int x, int y) {
 
                     if(b->isEnabled()) {
 //                        qDebug() << "<handle_opening> recursive opening";
-                        handle_opening(x_2, y_2);
+                        open_button_board(x_2, y_2);
                     }
                 }
             }
@@ -157,7 +157,7 @@ void MainWindow::square_leftclick() {
             int x = xy.at(0);
             int y = xy.at(1);
 
-            handle_opening(x, y);
+            open_button_board(x, y);
 
             break;
         }

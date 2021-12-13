@@ -75,8 +75,6 @@ void MainWindow::open_square_button(int x, int y) {
         b->setDisabled(true);
     }
 
-    return;
-
 }
 
 void MainWindow::handle_opening(int x, int y) {

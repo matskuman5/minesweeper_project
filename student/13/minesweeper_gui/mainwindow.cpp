@@ -62,31 +62,20 @@ void MainWindow::open_square_button(int x, int y) {
 
     QToolButton* b = get_button(x, y);
 
-    std::string coordinates = b->objectName().toStdString();
+    Square s = board_.getSquare(x, y);
 
-    std::vector<int> xy = coordinates_from_string(coordinates);
-//        qDebug() << "checking: " << xy.at(0) << ", " << xy.at(1) << " if equal to " << x << ", " << y;
+    if (s.hasMine()) {
+        std::string filename = ":/images/bomb.png";
+        QPixmap image(QString::fromStdString(filename));
 
-    if (x == xy.at(0) && y == xy.at(1)) {
-
-//              qDebug() << "found! " << xy.at(0) << ", " << xy.at(1);
-
-        Square s = board_.getSquare(x, y);
-
-        if (s.hasMine()) {
-            std::string filename = ":/images/bomb.png";
-            QPixmap image(QString::fromStdString(filename));
-
-            b->setIcon(image);
-        } else {
-            b->setText(QString::number(s.countAdjacent()));
-            qDebug() << "<open_square_button> disabling " << x << ", " << y;
-            b->setDisabled(true);
-        }
-
-        return;
-
+        b->setIcon(image);
+    } else {
+        b->setText(QString::number(s.countAdjacent()));
+        qDebug() << "<open_square_button> disabling " << x << ", " << y;
+        b->setDisabled(true);
     }
+
+    return;
 
 }
 
@@ -136,8 +125,6 @@ void MainWindow::handle_opening(int x, int y) {
     }
 
 }
-
-
 
 void MainWindow::square_leftclick() {
 

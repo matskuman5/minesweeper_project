@@ -191,7 +191,7 @@ void MainWindow::square_rightclick() {
 
 }
 
-std::vector<int> MainWindow::coordinates_from_string(std::string s) {
+std::vector<int> MainWindow::coordinates_from_string(std::string s) const {
 
     std::vector<int> coordinates;
 
@@ -243,7 +243,7 @@ void MainWindow::new_game_button_click() {
 
 }
 
-void MainWindow::check_button_click() {
+void MainWindow::check_button_click() const {
 
     int misplaced_flags = 0;
 
@@ -335,7 +335,7 @@ void MainWindow::init_squares() {
 
 }
 
-QToolButton *MainWindow::get_button(int x, int y) {
+QToolButton *MainWindow::get_button(int x, int y) const {
 
     for (auto b : buttons_) {
         std::string coordinates = b->objectName().toStdString();

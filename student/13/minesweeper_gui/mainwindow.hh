@@ -29,7 +29,7 @@ private slots:
     void square_leftclick();
     void square_rightclick();
     void new_game_button_click();
-    void check_button_click();
+    void check_button_click() const;
     void timer_tick();
 
 private:
@@ -59,8 +59,8 @@ private:
     void open_button(int x, int y);
     void init_squares();
     void end_game(bool won);
-    std::vector<int> coordinates_from_string(std::string s);
+    std::vector<int> coordinates_from_string(std::string s) const;
     void handle_opening(int x, int y);
-    QToolButton* get_button(int x, int y);
+    QToolButton* get_button(int x, int y) const;
 };
 #endif // MAINWINDOW_HH

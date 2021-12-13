@@ -165,16 +165,8 @@ void MainWindow::open_button_ui(int x, int y) {
         b->setIcon(QPixmap(":/images/bomb.png"));
     } else {
 
-        std::vector<std::string> number_colors;
-
-        number_colors.push_back("blue");
-        number_colors.push_back("green");
-        number_colors.push_back("red");
-        number_colors.push_back("purple");
-        number_colors.push_back("brown");
-        number_colors.push_back("teal");
-        number_colors.push_back("black");
-        number_colors.push_back("gray");
+        const std::vector<std::string> number_colors = {"blue", "green", "red", "purple",
+                                                        "brown", "teal", "black", "gray"};
 
         int mines = s.countAdjacent();
 

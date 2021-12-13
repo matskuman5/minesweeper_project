@@ -90,11 +90,11 @@ void MainWindow::handle_opening(int x, int y) {
     if (s.hasMine()) {
         end_game(false);
     } else {
-        qDebug() << "<handle_opening> adjacent mines: " << board_.getSquare(x, y).countAdjacent();
+//        qDebug() << "<handle_opening> adjacent mines: " << board_.getSquare(x, y).countAdjacent();
 
         if (board_.getSquare(x, y).countAdjacent() == 0) {
 
-            qDebug() << "<handle_opening> opening adjacent squares";
+//            qDebug() << "<handle_opening> opening adjacent squares";
 
             int min_x = std::max(0, x - 1);
             int max_x = std::min(board_.getSize() - 1, x + 1);
@@ -103,18 +103,19 @@ void MainWindow::handle_opening(int x, int y) {
 
             for(int y_2 = min_y; y_2 <= max_y; ++y_2) {
                 for(int x_2 = min_x; x_2 <= max_x; ++x_2) {
-                    qDebug() << "<handle_opening> square: " << x_2 << ", " << y_2 << ", open: " << board_.getSquare(x_2, y_2).isOpen();
+//                    qDebug() << "<handle_opening> square: " << x_2 << ", " << y_2 << ", open: " << board_.getSquare(x_2, y_2).isOpen();
 
                     QToolButton* b = get_button(x_2, y_2);
 
                     if(b->isEnabled()) {
-                        qDebug() << "<handle_opening> recursive opening";
+//                        qDebug() << "<handle_opening> recursive opening";
                         handle_opening(x_2, y_2);
                     }
                 }
             }
         }
 
+        qDebug() << "opening BOARD square " << x << ", " << y;
         board_.openSquare(x, y);
 
         if (board_.isGameOver()) {
@@ -169,6 +170,10 @@ void MainWindow::square_rightclick() {
 
                 //remove the flag by setting the icon to be an empty image
                 b->setIcon(QIcon());
+            }
+
+            if (board_.isGameOver()) {
+                end_game(true);
             }
 
             break;

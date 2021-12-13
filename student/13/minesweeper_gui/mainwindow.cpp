@@ -255,14 +255,16 @@ void MainWindow::end_game(bool won) {
 
 void MainWindow::new_game_button_click() {
 
-    for (QChar qc : seed_line_edit_->text()) {
+    QString seed = seed_line_edit_->text();
+
+    for (auto qc : seed) {
         if (!qc.isDigit()) {
             text_browser_->append("Error: seed must be an integer value");
             return;
         }
     }
 
-    if (seed_line_edit_->text().isEmpty()) {
+    if (seed.isEmpty()) {
         text_browser_->append("Error: empty seed");
         return;
     }
@@ -280,7 +282,7 @@ void MainWindow::new_game_button_click() {
 
     board_ = GameBoard();
 
-    board_.init(seed_line_edit_->text().toInt(), board_size_spinbox_->value());
+    board_.init(seed.toInt(), board_size_spinbox_->value());
 
     init_squares();
 

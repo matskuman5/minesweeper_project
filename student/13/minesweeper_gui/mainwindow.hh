@@ -56,9 +56,11 @@ private:
     unsigned int minutes_;
     unsigned int seconds_;
 
+    void open_square_button(int x, int y);
     void init_squares();
     void end_game(bool won);
     std::vector<int> coordinates_from_string(std::string s);
-
+    void handle_opening(int x, int y);
+    QToolButton* get_button(int x, int y);
 };
 #endif // MAINWINDOW_HH

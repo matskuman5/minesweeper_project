@@ -58,14 +58,93 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::square_leftclick() {
+void MainWindow::open_square_button(int x, int y) {
 
-    qDebug() << "test";
+    QToolButton* b = get_button(x, y);
+
+    std::string coordinates = b->objectName().toStdString();
+
+    std::vector<int> xy = coordinates_from_string(coordinates);
+//        qDebug() << "checking: " << xy.at(0) << ", " << xy.at(1) << " if equal to " << x << ", " << y;
+
+    if (x == xy.at(0) && y == xy.at(1)) {
+
+//              qDebug() << "found! " << xy.at(0) << ", " << xy.at(1);
+
+        Square s = board_.getSquare(x, y);
+
+        if (s.hasMine()) {
+            std::string filename = ":/images/bomb.png";
+            QPixmap image(QString::fromStdString(filename));
+
+            b->setIcon(image);
+        } else {
+            b->setText(QString::number(s.countAdjacent()));
+            qDebug() << "<open_square_button> disabling " << x << ", " << y;
+            b->setDisabled(true);
+        }
+
+        return;
+
+    }
+
+}
+
+void MainWindow::handle_opening(int x, int y) {
+
+    Square s = board_.getSquare(x, y);
+
+    if (s.hasFlag()) {
+        return;
+    }
+
+    open_square_button(x, y);
+
+    if (s.hasMine()) {
+        end_game(false);
+    } else {
+        qDebug() << "<handle_opening> adjacent mines: " << board_.getSquare(x, y).countAdjacent();
+
+        if (board_.getSquare(x, y).countAdjacent() == 0) {
+
+            qDebug() << "<handle_opening> opening adjacent squares";
+
+            int min_x = std::max(0, x - 1);
+            int max_x = std::min(board_.getSize() - 1, x + 1);
+            int min_y = std::max(0, y - 1);
+            int max_y = std::min(board_.getSize() - 1, y + 1);
+
+            for(int y_2 = min_y; y_2 <= max_y; ++y_2) {
+                for(int x_2 = min_x; x_2 <= max_x; ++x_2) {
+                    qDebug() << "<handle_opening> square: " << x_2 << ", " << y_2 << ", open: " << board_.getSquare(x_2, y_2).isOpen();
+
+                    QToolButton* b = get_button(x_2, y_2);
+
+                    if(b->isEnabled()) {
+                        qDebug() << "<handle_opening> recursive opening";
+                        handle_opening(x_2, y_2);
+                    }
+                }
+            }
+        }
+
+        board_.openSquare(x, y);
+
+        if (board_.isGameOver()) {
+            end_game(true);
+        }
+    }
+
+}
+
+
+
+void MainWindow::square_leftclick() {
 
     for (auto b : buttons_) {
         if (b == sender()) {
 
-            qDebug() << b->objectName();
+            qDebug() << "clicked on " << b->objectName();
 
             std::string coordinates = b->objectName().toStdString();
 
@@ -73,30 +152,7 @@ void MainWindow::square_leftclick() {
             int x = xy.at(0);
             int y = xy.at(1);
 
-            Square s = board_.getSquare(x, y);
-
-            if (s.hasFlag()) {
-                return;
-            }
-
-            if (board_.openSquare(x, y)) {
-                b->setText(QString::number(s.countAdjacent()));
-                if (board_.isGameOver()) {
-                    end_game(true);
-                }
-            } else {
-                std::string filename = ":/images/bomb.png";
-                QPixmap image(QString::fromStdString(filename));
-
-                b->setIcon(image);
-                end_game(false);
-            }
-
-            qDebug() << board_.openSquare(x, y);
-            qDebug() << b->sizeHint();
-            qDebug() << b->sizePolicy();
-
-            b->setDisabled(true);
+            handle_opening(x, y);
 
             break;
         }
@@ -207,6 +263,7 @@ void MainWindow::timer_tick() {
 
 }
 
+
 void MainWindow::end_game(bool won) {
 
     for (auto b : buttons_) {
@@ -253,5 +310,24 @@ void MainWindow::init_squares() {
 
         }
     }
+
+}
+
+QToolButton *MainWindow::get_button(int x, int y) {
+
+    for (auto b : buttons_) {
+        std::string coordinates = b->objectName().toStdString();
+
+        std::vector<int> xy = coordinates_from_string(coordinates);
+        int x_2 = xy.at(0);
+        int y_2 = xy.at(1);
+
+        if (x == x_2 && y == y_2) {
+            return b;
+        }
+
+    }
+
+    return nullptr;
 
 }

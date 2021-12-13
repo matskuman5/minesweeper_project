@@ -1,3 +1,8 @@
+// MINESWEEPER GUI PROJECT
+// PROGRAMMING 2 COURSE
+// Author: Matias Selin
+// Student number: 150181798
+
 #include "mainwindow.hh"
 #include "ui_mainwindow.h"
 #include "qrightclickbutton.hh"

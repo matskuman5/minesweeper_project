@@ -1,3 +1,8 @@
+// MINESWEEPER GUI PROJECT
+// PROGRAMMING 2 COURSE
+// Author: Matias Selin
+// Student number: 150181798
+
 #ifndef QRIGHTCLICKBUTTON_HH
 #define QRIGHTCLICKBUTTON_HH
 

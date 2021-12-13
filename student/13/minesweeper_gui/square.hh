@@ -11,6 +11,11 @@
 #############################################################################
 */
 
+// MINESWEEPER GUI PROJECT
+// PROGRAMMING 2 COURSE
+// Author: Matias Selin
+// Student number: 150181798
+
 #ifndef SQUARE_HH
 #define SQUARE_HH
 

@@ -1,3 +1,8 @@
+// MINESWEEPER GUI PROJECT
+// PROGRAMMING 2 COURSE
+// Author: Matias Selin
+// Student number: 150181798
+
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 

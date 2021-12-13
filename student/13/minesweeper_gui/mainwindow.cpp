@@ -60,38 +60,51 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::open_button_ui(int x, int y) {
+void MainWindow::init_squares() {
 
-    QToolButton* b = get_button(x, y);
+    for (int x = 0; x < board_size_spinbox_->value(); x++) {
+        for (int y = 0; y < board_size_spinbox_->value(); y++) {
 
-    Square s = board_.getSquare(x, y);
+            QString button_name = QString::fromStdString(std::to_string(x) + " " + std::to_string(y));
 
-    if (s.hasMine()) {
-        b->setIcon(QPixmap(":/images/bomb.png"));
-    } else {
+            QRightClickButton* rightclickButton = new QRightClickButton(this);
+            rightclickButton->setObjectName(button_name);
 
-        std::vector<std::string> number_colors;
+            //set the SizePolicy of the button to Expanding so it resizes properly
+            QSizePolicy sp = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            rightclickButton->setSizePolicy(sp);
 
-        number_colors.push_back("blue");
-        number_colors.push_back("green");
-        number_colors.push_back("red");
-        number_colors.push_back("purple");
-        number_colors.push_back("brown");
-        number_colors.push_back("teal");
-        number_colors.push_back("black");
-        number_colors.push_back("gray");
+            rightclickButton->setStyleSheet("QToolButton { background-color: rgb(200,200,200)}");
 
-        int mines = s.countAdjacent();
+            buttons_.push_back(rightclickButton);
 
-        if (mines != 0) {
-            b->setText(QString::number(mines));
-            QString stylesheet = QString::fromStdString("QToolButton { color: " + number_colors.at(mines - 1) + "; font: bold; background-color: rgb(230, 230, 230) }");
-            b->setStyleSheet(stylesheet);
-        } else {
-            b->setStyleSheet("QToolButton { background-color: rgb(230,230,230)}");
+            connect(rightclickButton, &QToolButton::clicked, this, &MainWindow::square_leftclick);
+            connect(rightclickButton, &QRightClickButton::rightClicked, this, &MainWindow::square_rightclick);
+
+            board_grid->addWidget(rightclickButton, y, x);
+
         }
-        qDebug() << "<open_square_button> disabling " << x << ", " << y;
-        b->setDisabled(true);
+    }
+
+}
+
+void MainWindow::square_leftclick() {
+
+    for (auto b : buttons_) {
+        if (b == sender()) {
+
+            qDebug() << "clicked on " << b->objectName();
+
+            std::string coordinates = b->objectName().toStdString();
+
+            std::vector<int> xy = coordinates_from_string(coordinates);
+            int x = xy.at(0);
+            int y = xy.at(1);
+
+            open_button_board(x, y);
+
+            break;
+        }
     }
 
 }
@@ -141,26 +154,40 @@ void MainWindow::open_button_board(int x, int y) {
             end_game(true);
         }
     }
-
 }
 
-void MainWindow::square_leftclick() {
+void MainWindow::open_button_ui(int x, int y) {
 
-    for (auto b : buttons_) {
-        if (b == sender()) {
+    QToolButton* b = get_button(x, y);
 
-            qDebug() << "clicked on " << b->objectName();
+    Square s = board_.getSquare(x, y);
 
-            std::string coordinates = b->objectName().toStdString();
+    if (s.hasMine()) {
+        b->setIcon(QPixmap(":/images/bomb.png"));
+    } else {
 
-            std::vector<int> xy = coordinates_from_string(coordinates);
-            int x = xy.at(0);
-            int y = xy.at(1);
+        std::vector<std::string> number_colors;
 
-            open_button_board(x, y);
+        number_colors.push_back("blue");
+        number_colors.push_back("green");
+        number_colors.push_back("red");
+        number_colors.push_back("purple");
+        number_colors.push_back("brown");
+        number_colors.push_back("teal");
+        number_colors.push_back("black");
+        number_colors.push_back("gray");
 
-            break;
+        int mines = s.countAdjacent();
+
+        if (mines != 0) {
+            b->setText(QString::number(mines));
+            QString stylesheet = QString::fromStdString("QToolButton { color: " + number_colors.at(mines - 1) + "; font: bold; background-color: rgb(230, 230, 230) }");
+            b->setStyleSheet(stylesheet);
+        } else {
+            b->setStyleSheet("QToolButton { background-color: rgb(230,230,230)}");
         }
+        qDebug() << "<open_square_button> disabling " << x << ", " << y;
+        b->setDisabled(true);
     }
 
 }
@@ -212,18 +239,26 @@ void MainWindow::square_rightclick() {
 
 }
 
-std::vector<int> MainWindow::coordinates_from_string(std::string s) const {
+void MainWindow::end_game(bool won) {
 
-    std::vector<int> coordinates;
+    for (auto b : buttons_) {
+        b->setDisabled(true);
+    }
 
-    int x = std::stoi(s.substr(0, s.find(" ")));
-    s.erase(0, s.find(" ") + 1);
-    int y = std::stoi(s);
+    timer_->stop();
 
-    coordinates.push_back(x);
-    coordinates.push_back(y);
+    if (won) {
+        text_browser_->append("You won, great job!");
+        for (auto b : buttons_) {
+            if (b->isEnabled()) {
+                b->setText("*");
+            }
+        }
+    } else {
+        text_browser_->append("BOOM! You lost!");
+    }
 
-    return coordinates;
+    text_browser_->append("Game over! Enter a seed and press 'New Game' to start again!");
 
 }
 
@@ -306,55 +341,18 @@ void MainWindow::timer_tick() {
 
 }
 
+std::vector<int> MainWindow::coordinates_from_string(std::string s) const {
 
-void MainWindow::end_game(bool won) {
+    std::vector<int> coordinates;
 
-    for (auto b : buttons_) {
-        b->setDisabled(true);
-    }
+    int x = std::stoi(s.substr(0, s.find(" ")));
+    s.erase(0, s.find(" ") + 1);
+    int y = std::stoi(s);
 
-    timer_->stop();
+    coordinates.push_back(x);
+    coordinates.push_back(y);
 
-    if (won) {
-        text_browser_->append("You won, great job!");
-        for (auto b : buttons_) {
-            if (b->isEnabled()) {
-                b->setText("*");
-            }
-        }
-    } else {
-        text_browser_->append("BOOM! You lost!");
-    }
-
-    text_browser_->append("Game over! Enter a seed and press 'New Game' to start again!");
-
-}
-
-void MainWindow::init_squares() {
-
-    for (int x = 0; x < board_size_spinbox_->value(); x++) {
-        for (int y = 0; y < board_size_spinbox_->value(); y++) {
-
-            QString button_name = QString::fromStdString(std::to_string(x) + " " + std::to_string(y));
-
-            QRightClickButton* rightclickButton = new QRightClickButton(this);
-            rightclickButton->setObjectName(button_name);
-
-            //set the SizePolicy of the button to Expanding so it resizes properly
-            QSizePolicy sp = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-            rightclickButton->setSizePolicy(sp);
-
-            rightclickButton->setStyleSheet("QToolButton { background-color: rgb(200,200,200)}");
-
-            buttons_.push_back(rightclickButton);
-
-            connect(rightclickButton, &QToolButton::clicked, this, &MainWindow::square_leftclick);
-            connect(rightclickButton, &QRightClickButton::rightClicked, this, &MainWindow::square_rightclick);
-
-            board_grid->addWidget(rightclickButton, y, x);
-
-        }
-    }
+    return coordinates;
 
 }
 

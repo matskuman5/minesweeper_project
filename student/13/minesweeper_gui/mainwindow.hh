@@ -67,21 +67,21 @@ private:
     unsigned int minutes_;
     unsigned int seconds_;
 
-    // handles the opening of gameboard squares on the UI level (disabling the button, for example)
-    void open_button_ui(int x, int y);
-
     // initializes a new game board by generating the buttons
     void init_squares();
+
+    // handles the opening of gameboard squares on the internal GameBoard level
+    // calls open_button_ui to handle opening the UI buttons corresponding to the squares
+    void open_button_board(int x, int y);
+
+    // handles the opening of gameboard squares on the UI level (disabling the button, for example)
+    void open_button_ui(int x, int y);
 
     // handles ending a lost or won game
     void end_game(bool won);
 
     // returns the coordinates of a gameboard button from its name
     std::vector<int> coordinates_from_string(std::string s) const;
-
-    // handles the opening of gameboard squares on the internal GameBoard level
-    // calls open_button_ui to handle opening the UI buttons corresponding to the squares
-    void open_button_board(int x, int y);
 
     // returns a pointer to the desired gameboard button from its coordinates
     QToolButton* get_button(int x, int y) const;

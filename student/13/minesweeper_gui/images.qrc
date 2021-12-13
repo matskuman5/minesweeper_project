@@ -2,5 +2,6 @@
     <qresource prefix="/images">
         <file>bomb.png</file>
         <file>flag.png</file>
+        <file>question_mark.png</file>
     </qresource>
 </RCC>

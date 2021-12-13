@@ -157,19 +157,29 @@ void MainWindow::square_rightclick() {
             int x = xy.at(0);
             int y = xy.at(1);
 
+            qDebug() << b->objectName();
+            qDebug() << b->objectName().indexOf("q");
+
+            if (b->objectName().indexOf("q") != -1) {
+                QString new_name = b->objectName();
+                new_name.chop(2);
+                b->setObjectName(new_name);
+
+                //remove the question mark by setting the icon to be an empty image
+                b->setIcon(QIcon());
+                return;
+            }
+
             if (board_.flagSquare(x, y)) {
                 qDebug() << "flagged " << x << ", " << y;
 
-                std::string filename = ":/images/flag.png";
-                QPixmap image(QString::fromStdString(filename));
-
-                b->setIcon(image);
+                b->setIcon(QPixmap(":/images/flag.png"));
 
             } else {
                 qDebug() << "deflagged " << x << ", " << y;
 
-                //remove the flag by setting the icon to be an empty image
-                b->setIcon(QIcon());
+                b->setIcon(QPixmap(":/images/question_mark.png"));
+                b->setObjectName(b->objectName() + " q");
             }
 
             if (board_.isGameOver()) {

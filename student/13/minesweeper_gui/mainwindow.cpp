@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(new_game_button_, &QPushButton::clicked, this, &MainWindow::new_game_button_click);
 
     check_button_ = new QPushButton("Check", this);
+    connect(check_button_, &QPushButton::clicked, this, &MainWindow::check_button_click);
 
     seed_line_edit_ = new QLineEdit();
     seed_line_edit_->setPlaceholderText("Seed:");
@@ -242,6 +243,30 @@ void MainWindow::new_game_button_click() {
     minutes_ = 0;
     seconds_ = 0;
     timer_->start();
+
+}
+
+void MainWindow::check_button_click() {
+
+    int misplaced_flags = 0;
+
+    for(int y = 0; y < board_.getSize(); ++y) {
+        for(int x = 0; x < board_.getSize(); ++x) {
+
+            Square s = board_.getSquare(x, y);
+            if (s.hasFlag() && !s.hasMine()) {
+                misplaced_flags++;
+            }
+
+        }
+    }
+
+    if (misplaced_flags > 0) {
+        QString message = QString::fromStdString("Oops! You've placed " + std::to_string(misplaced_flags) + " flag(s) in the wrong square(s)!");
+        text_browser_->append(message);
+    } else {
+        text_browser_->append("No misplaced flags so far, nice!");
+    }
 
 }
 

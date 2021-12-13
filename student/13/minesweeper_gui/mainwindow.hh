@@ -29,6 +29,7 @@ private slots:
     void square_leftclick();
     void square_rightclick();
     void new_game_button_click();
+    void check_button_click();
     void timer_tick();
 
 private:

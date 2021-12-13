@@ -48,7 +48,9 @@ private:
 
     GameBoard board_;
 
+    // contains all the UI buttons corresponding to squares on the gameboard
     std::vector<QRightClickButton*> buttons_;
+
     QWidget* central;
     QGridLayout* main_grid;
     QGridLayout* board_grid;

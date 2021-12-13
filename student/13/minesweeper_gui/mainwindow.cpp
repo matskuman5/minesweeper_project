@@ -65,6 +65,8 @@ void MainWindow::init_squares() {
     for (int x = 0; x < board_size_spinbox_->value(); x++) {
         for (int y = 0; y < board_size_spinbox_->value(); y++) {
 
+            // the coordinates of a button are stored in its ObjectName in the form "x y"
+            // the coordinates_from_string function can later return these coordinates in a std::vector of ints
             QString button_name = QString::fromStdString(std::to_string(x) + " " + std::to_string(y));
 
             QRightClickButton* rightclickButton = new QRightClickButton(this);
@@ -95,9 +97,7 @@ void MainWindow::square_leftclick() {
 
             qDebug() << "clicked on " << b->objectName();
 
-            std::string coordinates = b->objectName().toStdString();
-
-            std::vector<int> xy = coordinates_from_string(coordinates);
+            std::vector<int> xy = coordinates_from_string(b->objectName().toStdString());
             int x = xy.at(0);
             int y = xy.at(1);
 
@@ -127,7 +127,6 @@ void MainWindow::open_button_board(int x, int y) {
         if (board_.getSquare(x, y).countAdjacent() == 0) {
 
 //            qDebug() << "<handle_opening> opening adjacent squares";
-
             int min_x = std::max(0, x - 1);
             int max_x = std::min(board_.getSize() - 1, x + 1);
             int min_y = std::max(0, y - 1);
@@ -206,6 +205,8 @@ void MainWindow::square_rightclick() {
             qDebug() << b->objectName();
             qDebug() << b->objectName().indexOf("q");
 
+            // a square marked with a question mark has a 'q' at the end of its ObjectName
+            // a bit hacky, but it works
             if (b->objectName().indexOf("q") != -1) {
                 QString new_name = b->objectName();
                 new_name.chop(2);
@@ -224,7 +225,10 @@ void MainWindow::square_rightclick() {
             } else {
                 qDebug() << "deflagged " << x << ", " << y;
 
+                // right-clicking an already flagged square turns the flag into a question mark
                 b->setIcon(QPixmap(":/images/question_mark.png"));
+
+                // add a 'q' to the ObjectName so we know that the square is marked with a question mark
                 b->setObjectName(b->objectName() + " q");
             }
 
@@ -249,11 +253,6 @@ void MainWindow::end_game(bool won) {
 
     if (won) {
         text_browser_->append("You won, great job!");
-        for (auto b : buttons_) {
-            if (b->isEnabled()) {
-                b->setText("*");
-            }
-        }
     } else {
         text_browser_->append("BOOM! You lost!");
     }
@@ -362,10 +361,10 @@ QToolButton *MainWindow::get_button(int x, int y) const {
         std::string coordinates = b->objectName().toStdString();
 
         std::vector<int> xy = coordinates_from_string(coordinates);
-        int x_2 = xy.at(0);
-        int y_2 = xy.at(1);
+        int x_b = xy.at(0);
+        int y_b = xy.at(1);
 
-        if (x == x_2 && y == y_2) {
+        if (x == x_b && y == y_b) {
             return b;
         }
 

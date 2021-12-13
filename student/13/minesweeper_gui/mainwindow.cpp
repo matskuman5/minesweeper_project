@@ -5,6 +5,7 @@
 #include <string>
 #include <QToolButton>
 #include <QTimer>
+#include <map>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -68,7 +69,27 @@ void MainWindow::open_button(int x, int y) {
     if (s.hasMine()) {
         b->setIcon(QPixmap(":/images/bomb.png"));
     } else {
-        b->setText(QString::number(s.countAdjacent()));
+
+        std::vector<std::string> number_colors;
+
+        number_colors.push_back("blue");
+        number_colors.push_back("green");
+        number_colors.push_back("red");
+        number_colors.push_back("purple");
+        number_colors.push_back("brown");
+        number_colors.push_back("teal");
+        number_colors.push_back("black");
+        number_colors.push_back("gray");
+
+        int mines = s.countAdjacent();
+
+        if (mines != 0) {
+            b->setText(QString::number(mines));
+            QString stylesheet = QString::fromStdString("QToolButton { color: " + number_colors.at(mines - 1) + "; font: bold; background-color: rgb(230, 230, 230) }");
+            b->setStyleSheet(stylesheet);
+        } else {
+            b->setStyleSheet("QToolButton { background-color: rgb(230,230,230)}");
+        }
         qDebug() << "<open_square_button> disabling " << x << ", " << y;
         b->setDisabled(true);
     }
@@ -322,6 +343,8 @@ void MainWindow::init_squares() {
             //set the SizePolicy of the button to Expanding so it resizes properly
             QSizePolicy sp = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
             rightclickButton->setSizePolicy(sp);
+
+            rightclickButton->setStyleSheet("QToolButton { background-color: rgb(200,200,200)}");
 
             buttons_.push_back(rightclickButton);
 

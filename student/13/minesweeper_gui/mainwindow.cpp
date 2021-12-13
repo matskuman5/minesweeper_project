@@ -323,8 +323,8 @@ void MainWindow::init_squares() {
             rightclickButton->setObjectName(button_name);
 
             //set the SizePolicy of the button to Expanding so it resizes properly
-            QSizePolicy* sp = new QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-            rightclickButton->setSizePolicy(*sp);
+            QSizePolicy sp = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            rightclickButton->setSizePolicy(sp);
 
             buttons_.push_back(rightclickButton);
 
